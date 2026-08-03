@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AI 中转站推荐">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="2026最全中转站推荐">
   <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f8ef7"/><stop offset=".55" stop-color="#7868ff"/><stop offset="1" stop-color="#33d5c5"/></linearGradient></defs>
   <rect width="64" height="64" rx="14" fill="#070b14"/>
   <path d="M14 45 27 17h10l13 28h-9l-2.6-6H25.6L23 45Zm14.5-13h7L32 23.5Z" fill="url(#g)"/>

@@ -21,13 +21,25 @@ async function htmlFiles(directory = root) {
 
 test("首页包含完整 SEO 和静态榜单", async () => {
   const html = await text("index.html");
-  assert.match(html, /<title>AI 中转站推荐/);
+  assert.match(html, /<title>2026最全中转站推荐<\/title>/);
   assert.match(html, /<meta name="description"/);
+  assert.match(html, /<time datetime="2026-08-03">2026年8月3日<\/time>/);
+  assert.doesNotMatch(html, /家收录了简介/);
   assert.match(html, /<link rel="canonical" href="https:\/\/airecommended\.github\.io\/"/);
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /"FAQPage"/);
   assert.match(html, /"ItemList"/);
   assert.equal((html.match(/class="station-card"/g) || []).length, 50);
+});
+
+test("榜单文字不小于 14px 且站点行使用交替配色", async () => {
+  const css = await text("assets/styles.css");
+  const explicitSizes = [...css.matchAll(/(?:font-size:\s*|font:\s*[^;{}]*?)(\d+)px/g)]
+    .map((match) => Number(match[1]));
+  assert.ok(explicitSizes.length > 0);
+  assert.ok(explicitSizes.every((size) => size >= 14), `发现小于 14px 的字号：${explicitSizes.filter((size) => size < 14).join(", ")}`);
+  assert.match(css, /\.station-card:nth-child\(4n \+ 1\)/);
+  assert.match(css, /\.station-card:nth-child\(4n \+ 2\)/);
 });
 
 test("展示数据最多 500 条且分页不超过 10 页", async () => {

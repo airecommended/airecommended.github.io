@@ -11,7 +11,7 @@ const MINIFIED_STYLES_PATH = path.join(ROOT, "assets", "styles.min.css");
 const SOURCE_URL = process.env.DATA_SOURCE_URL
   || "https://raw.githubusercontent.com/hvoyai/awesome-ai-api/main/data.json";
 const ORIGIN = "https://airecommended.github.io";
-const SITE_NAME = "AI 中转站推荐";
+const SITE_NAME = "2026最全中转站推荐";
 const PAGE_SIZE = 50;
 const MAX_SITES = 500;
 const SHOULD_SYNC = process.argv.includes("--sync");
@@ -198,6 +198,11 @@ function normalizeDate(value) {
   return Number.isNaN(date.valueOf()) || date.toISOString().slice(0, 10) !== text ? "" : text;
 }
 
+function formatChineseDate(value) {
+  const [year, month, day] = value.split("-").map(Number);
+  return `${year}年${month}月${day}日`;
+}
+
 function normalizeSite(site, index) {
   const models = Array.isArray(site.models) ? site.models.map(String).map((item) => item.trim()).filter(Boolean) : [];
   const payments = Array.isArray(site.paymentMethods)
@@ -352,8 +357,7 @@ function formatStat(value, formatter) {
 }
 
 function renderPageAnalysis(stats, first, last) {
-  const summary = `排名 ${first}–${last} 的 ${stats.total} 家站点中，${stats.descriptions} 家收录了简介，${stats.established} 家收录了成立日期，${stats.modelDetails} 家提供模型厂商明细，${stats.paymentDetails} 家提供支付方式信息。退款政策已知 ${stats.refund.known} 家，其中 ${stats.refund.yes} 家明确支持；发票政策已知 ${stats.invoice.known} 家，其中 ${stats.invoice.yes} 家明确支持。`;
-  return `<section class="page-analysis" aria-labelledby="page-analysis-title"><div class="page-analysis__head"><div><p>PAGE DATA / ${first}–${last}</p><h3 id="page-analysis-title">本页数据概览</h3></div><p>${escapeHtml(summary)}</p></div><dl class="analysis-grid"><div><dt>在线率中位数</dt><dd>${formatStat(stats.uptime.value, formatUptime)}</dd><small>样本 ${stats.uptime.sample}/${stats.total}</small></div><div><dt>延迟中位数</dt><dd>${formatStat(stats.latency.value, formatLatency)}</dd><small>样本 ${stats.latency.sample}/${stats.total}</small></div><div><dt>模型数量中位数</dt><dd>${formatStat(stats.modelCount.value, (value) => `${number.format(value)} 个`)}</dd><small>样本 ${stats.modelCount.sample}/${stats.total}</small></div><div><dt>用户评分中位数</dt><dd>${formatStat(stats.rating.value, (value) => `${number.format(value)} / 5`)}</dd><small>样本 ${stats.rating.sample}/${stats.total}</small></div></dl></section>`;
+  return `<section class="page-analysis" aria-labelledby="page-analysis-title"><div class="page-analysis__head"><div><p>PAGE DATA / ${first}–${last}</p><h3 id="page-analysis-title">本页核心指标</h3></div></div><dl class="analysis-grid"><div><dt>在线率中位数</dt><dd>${formatStat(stats.uptime.value, formatUptime)}</dd><small>样本 ${stats.uptime.sample}/${stats.total}</small></div><div><dt>延迟中位数</dt><dd>${formatStat(stats.latency.value, formatLatency)}</dd><small>样本 ${stats.latency.sample}/${stats.total}</small></div><div><dt>模型数量中位数</dt><dd>${formatStat(stats.modelCount.value, (value) => `${number.format(value)} 个`)}</dd><small>样本 ${stats.modelCount.sample}/${stats.total}</small></div><div><dt>用户评分中位数</dt><dd>${formatStat(stats.rating.value, (value) => `${number.format(value)} / 5`)}</dd><small>样本 ${stats.rating.sample}/${stats.total}</small></div></dl></section>`;
 }
 
 function objectiveSiteSummary(site) {
@@ -539,8 +543,8 @@ function renderTopicStructuredData({ topic, canonical, title, description, sites
 
 function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
   const canonical = `${ORIGIN}/${topic.slug}/`;
-  const title = `${topic.label}推荐｜${allMatches.length} 家 AI API 中转站对比`;
-  const description = `${topic.label}专题收录 ${allMatches.length} 家公开资料相关的 AI API 中转站，对比在线率、延迟、模型数量和服务信息，并提供接入验证、计费与安全选择指南。`;
+  const title = `${topic.label}推荐｜${SITE_NAME}`;
+  const description = `${SITE_NAME}的${topic.label}专题，更新于${formatChineseDate(updatedDate)}。收录 ${allMatches.length} 家公开资料相关的 AI API 中转站，完整对比在线率、响应延迟、模型数量、成立日期、支付方式、退款与发票信息，并提供接口兼容、计费复算、稳定性和隐私安全验证指南。`;
   const stats = topicStats(allMatches);
   const faq = topicFaq(topic);
   const jsonLd = renderTopicStructuredData({ topic, canonical, title, description, sites, totalMatches: allMatches.length, updatedDate });
@@ -552,7 +556,7 @@ function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
     <meta name="keywords" content="AI 中转站推荐,API 中转站,AI API,中转站排行榜,GPT 中转站,Claude 中转站,Gemini 中转站,Codex 中转站" />
-    <meta name="author" content="AI 中转站推荐" />
+    <meta name="author" content="${SITE_NAME}" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="theme-color" content="#070b14" />
     <meta property="og:type" content="website" />
@@ -564,12 +568,12 @@ function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
     <meta property="og:image" content="${ORIGIN}/assets/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AI 中转站推荐排行榜与选择指南" />
+    <meta property="og:image:alt" content="${SITE_NAME}排行榜与选择指南" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${ORIGIN}/assets/og-image.png" />
-    <meta name="twitter:image:alt" content="AI 中转站推荐排行榜与选择指南" />
+    <meta name="twitter:image:alt" content="${SITE_NAME}排行榜与选择指南" />
     <link rel="canonical" href="${canonical}" />
     <link rel="alternate" hreflang="zh-CN" href="${canonical}" />
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
@@ -579,13 +583,13 @@ function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <header class="topbar">
-      <a class="wordmark" href="../" aria-label="${SITE_NAME}首页"><span>AI 中转站</span><strong>推荐</strong></a>
+      <a class="wordmark" href="../" aria-label="${SITE_NAME}首页"><span>2026最全中转站</span><strong>推荐</strong></a>
       <nav aria-label="主要导航"><a href="../#ranking">推荐榜</a><a href="../#topics">模型专题</a><a href="../#guide">怎么选</a><a href="../#faq">常见问题</a></nav>
     </header>
     <main id="main">
       <nav class="breadcrumbs" aria-label="面包屑"><a href="../">${SITE_NAME}</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(topic.label)}</span></nav>
       <section class="hero topic-hero">
-        <div class="hero__copy"><p class="eyebrow">MODEL DIRECTORY · ${updatedDate.replaceAll("-", ".")}</p><h1>${escapeHtml(topic.label)}<br /><em>推荐与对比</em></h1><p class="hero-copy">${escapeHtml(topic.intro)}</p><div class="hero-actions"><a href="#topic-ranking">查看候选站</a><a href="#topic-guide">阅读专项指南</a></div></div>
+        <div class="hero__copy"><p class="eyebrow">MODEL DIRECTORY · ${updatedDate.replaceAll("-", ".")}</p><h1>${escapeHtml(topic.label)}<br /><em>推荐与对比</em></h1><p class="hero-copy">${escapeHtml(topic.intro)}</p><p class="update-note"><strong>页面更新：</strong><time datetime="${updatedDate}">${formatChineseDate(updatedDate)}</time> · 榜单信息包含站点简介、成立日期、运行指标、模型厂商、支付方式及已公开的退款与发票政策。</p><div class="hero-actions"><a href="#topic-ranking">查看候选站</a><a href="#topic-guide">阅读专项指南</a></div></div>
         <aside class="hero__panel" aria-label="专题概览"><p>公开资料匹配</p><strong>${allMatches.length}</strong><span>家 ${escapeHtml(topic.label)}</span><dl><div><dt>本页展示</dt><dd>${sites.length} 家</dd></div><div><dt>在线率样本</dt><dd>${stats.uptime.sample}/${stats.total}</dd></div><div><dt>更新时间</dt><dd>${updatedDate}</dd></div></dl></aside>
       </section>
 
@@ -602,7 +606,7 @@ function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
 
       <section class="faq-section topic-faq" id="faq" aria-labelledby="topic-faq-title"><div class="section-kicker">专题常见问题</div><h2 id="topic-faq-title">${escapeHtml(topic.label)}常见问题</h2><div class="faq-list">${faq.map(([question, answer]) => `<details class="faq-item"><summary>${escapeHtml(question)}</summary><div class="faq-answer"><p>${escapeHtml(answer)}</p></div></details>`).join("")}</div></section>
     </main>
-    <footer class="footer"><a class="wordmark" href="../"><span>AI 中转站</span><strong>推荐</strong></a><p>公开信息用于初筛，使用 ${escapeHtml(topic.label)} 前请自行小额测试。</p><a href="#main">返回顶部 ↑</a></footer>
+    <footer class="footer"><a class="wordmark" href="../"><span>2026最全中转站</span><strong>推荐</strong></a><p>更新于 ${formatChineseDate(updatedDate)}；公开信息用于初筛，使用 ${escapeHtml(topic.label)} 前请自行小额测试。</p><a href="#main">返回顶部 ↑</a></footer>
   </body>
 </html>`;
 }
@@ -699,7 +703,7 @@ function renderStructuredData({ page, canonical, title, description, sites, tota
       "@id": `${ORIGIN}/#website`,
       url: `${ORIGIN}/`,
       name: SITE_NAME,
-      description: "AI API 中转站排名、服务指标与选择指南。",
+      description: "2026 年 AI API 中转站排行榜，提供运行指标、模型覆盖、支付与服务政策对比，以及计费、稳定性和安全选择指南。",
       inLanguage: "zh-CN",
     });
   }
@@ -758,22 +762,24 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
   const first = (page - 1) * PAGE_SIZE + 1;
   const last = first + sites.length - 1;
   const title = page === 1
-    ? `${SITE_NAME}｜${allSites.length} 家 AI API 中转站排行榜与选择指南`
+    ? SITE_NAME
     : `${SITE_NAME}第 ${page} 页｜排名 ${first}–${last}`;
   const description = page === 1
-    ? `${SITE_NAME}收录 ${allSites.length} 家 AI API 中转站，对比在线率、响应延迟、模型覆盖、支付方式、退款与发票信息，并提供稳定性、计费和安全选择指南。`
-    : `${SITE_NAME}第 ${page} 页，查看排名 ${first} 至 ${last} 的 AI API 中转站简介、成立日期、在线率、延迟、模型数量、用户评分和服务信息。`;
+    ? `${SITE_NAME}，更新于${formatChineseDate(updatedDate)}，收录 ${allSites.length} 家 AI API 中转站。完整对比站点简介、成立日期、在线率、响应延迟、模型厂商与数量、用户评价、支付方式、退款和发票政策，并提供价格倍率复算、上游类型判断、稳定性测试、隐私安全与接入前验收指南。`
+    : `${SITE_NAME}第 ${page} 页，更新于${formatChineseDate(updatedDate)}。查看排名 ${first} 至 ${last} 的 AI API 中转站完整简介、成立日期、在线率、延迟、模型厂商与数量、用户评分、支付方式、退款和发票信息，并参考计费、稳定性与安全选择指南。`;
   const stats = pageStats(sites);
   const relations = pageRelations(page, totalPages);
   const jsonLd = renderStructuredData({ page, canonical, title, description, sites, totalSites: allSites.length, updatedDate });
   const hero = page === 1
     ? `<p class="eyebrow">AI API SERVICE INDEX · ${updatedDate.replaceAll("-", ".")}</p>
-          <h1>AI 中转站推荐<br /><em>实时排行榜</em></h1>
-          <p class="hero-copy">从运行表现、模型覆盖、用户评价和服务政策出发，先比较，再用真实任务小额验证。</p>
+          <h1>2026最全中转站推荐</h1>
+          <p class="hero-copy">完整收录站点简介、成立日期、运行表现、模型厂商、用户评价、支付方式、退款与发票政策；先横向比较，再用真实任务小额验证。</p>
+          <p class="update-note"><strong>页面更新：</strong><time datetime="${updatedDate}">${formatChineseDate(updatedDate)}</time> · 数据会随线路状态、价格和站点政策变化，请以站点实时信息为准。</p>
           <div class="hero-actions"><a href="#ranking">浏览推荐榜</a><a href="#guide">阅读选择方法</a></div>`
     : `<p class="eyebrow">RANKING PAGE ${String(page).padStart(2, "0")} · ${updatedDate.replaceAll("-", ".")}</p>
-          <h1>AI 中转站推荐榜<br /><em>第 ${page} 页</em></h1>
-          <p class="hero-copy">本页展示综合排名 ${first}–${last}。需要先了解选择方法？<a href="${root}/#guide">返回首页阅读完整指南</a>。</p>`;
+          <h1>${SITE_NAME}<br /><em>第 ${page} 页</em></h1>
+          <p class="hero-copy">本页展示综合排名 ${first}–${last}，包含站点简介、成立日期、运行指标、模型、支付与服务政策。需要先了解选择方法？<a href="${root}/#guide">返回首页阅读完整指南</a>。</p>
+          <p class="update-note"><strong>页面更新：</strong><time datetime="${updatedDate}">${formatChineseDate(updatedDate)}</time></p>`;
   return `<!doctype html>
 <html lang="zh-CN">
   <head>
@@ -782,7 +788,7 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
     <meta name="keywords" content="AI 中转站推荐,API 中转站,AI API,中转站排行榜,GPT 中转站,Claude 中转站,Gemini 中转站,Codex 中转站" />
-    <meta name="author" content="AI 中转站推荐" />
+    <meta name="author" content="${SITE_NAME}" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="theme-color" content="#070b14" />
     <meta property="og:type" content="website" />
@@ -794,12 +800,12 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
     <meta property="og:image" content="${ORIGIN}/assets/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AI 中转站推荐排行榜与选择指南" />
+    <meta property="og:image:alt" content="${SITE_NAME}排行榜与选择指南" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${ORIGIN}/assets/og-image.png" />
-    <meta name="twitter:image:alt" content="AI 中转站推荐排行榜与选择指南" />
+    <meta name="twitter:image:alt" content="${SITE_NAME}排行榜与选择指南" />
     <link rel="canonical" href="${canonical}" />
     <link rel="alternate" hreflang="zh-CN" href="${canonical}" />
     ${relations.previous ? `<link rel="prev" href="${relations.previous}" />` : ""}
@@ -811,7 +817,7 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <header class="topbar">
-      <a class="wordmark" href="${root}/" aria-label="${SITE_NAME}首页"><span>AI 中转站</span><strong>推荐</strong></a>
+      <a class="wordmark" href="${root}/" aria-label="${SITE_NAME}首页"><span>2026最全中转站</span><strong>推荐</strong></a>
       <nav aria-label="主要导航"><a href="${root}/#ranking">推荐榜</a><a href="${root}/#topics">模型专题</a><a href="${root}/#guide">怎么选</a><a href="${root}/#faq">常见问题</a></nav>
     </header>
     <main id="main">
@@ -822,7 +828,7 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
         </div>
         <aside class="hero__panel" aria-label="榜单概览">
           <p>本期收录</p><strong>${allSites.length}</strong><span>家 AI API 中转站</span>
-          <dl><div><dt>当前页</dt><dd>${page} / ${totalPages}</dd></div><div><dt>本页范围</dt><dd>${first}–${last}</dd></div><div><dt>每页数量</dt><dd>${PAGE_SIZE}</dd></div></dl>
+          <dl><div><dt>当前页</dt><dd>${page} / ${totalPages}</dd></div><div><dt>本页范围</dt><dd>${first}–${last}</dd></div><div><dt>更新时间</dt><dd><time datetime="${updatedDate}">${updatedDate}</time></dd></div></dl>
         </aside>
       </section>
 
@@ -842,8 +848,8 @@ ${sites.map(renderSite).join("\n")}
 ${page === 1 ? `${renderTopicDirectory(allSites)}\n\n${homeGuide()}` : `      <section class="page-continue"><p>已经看完第 ${page} 页？</p><h2>回到选择指南，建立自己的测试标准</h2><a href="${root}/#guide">阅读中转站选择方法 →</a></section>`}
     </main>
     <footer class="footer">
-      <a class="wordmark" href="${root}/"><span>AI 中转站</span><strong>推荐</strong></a>
-      <p>先比较，后测试；少量充值，为关键调用保留备用方案。</p>
+      <a class="wordmark" href="${root}/"><span>2026最全中转站</span><strong>推荐</strong></a>
+      <p>页面更新于 ${formatChineseDate(updatedDate)}；先比较，后测试，少量充值并保留备用方案。</p>
       <a href="#main">返回顶部 ↑</a>
     </footer>
   </body>

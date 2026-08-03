@@ -8,8 +8,8 @@
   <rect width="1200" height="6" fill="url(#line)"/>
   <g fill="none" stroke="#1b2438"><path d="M80 475h1040"/><path d="M80 525h1040"/><path d="M80 575h1040"/></g>
   <text x="82" y="105" fill="#4f8ef7" font-family="monospace" font-size="24" font-weight="700" letter-spacing="5">AI API SERVICE INDEX</text>
-  <text x="78" y="250" fill="#eef2fc" font-family="sans-serif" font-size="78" font-weight="700">AI 中转站推荐</text>
-  <text x="78" y="350" fill="url(#line)" font-family="sans-serif" font-size="78" font-weight="700">排行榜与选择指南</text>
-  <text x="82" y="430" fill="#8896b3" font-family="sans-serif" font-size="28">最多收录 500 家 · 静态 HTML · 每日自动更新</text>
+  <text x="78" y="250" fill="#eef2fc" font-family="sans-serif" font-size="72" font-weight="700">2026最全中转站推荐</text>
+  <text x="78" y="350" fill="url(#line)" font-family="sans-serif" font-size="72" font-weight="700">排行榜与完整选择指南</text>
+  <text x="82" y="430" fill="#8896b3" font-family="sans-serif" font-size="28">最多收录 500 家 · 完整信息 · 标注更新时间</text>
   <g font-family="monospace" font-size="22"><text x="90" y="510" fill="#4f8ef7">01</text><text x="150" y="510" fill="#eef2fc">运行表现</text><text x="350" y="510" fill="#4f8ef7">02</text><text x="410" y="510" fill="#eef2fc">模型覆盖</text><text x="610" y="510" fill="#4f8ef7">03</text><text x="670" y="510" fill="#eef2fc">服务政策</text><text x="870" y="510" fill="#4f8ef7">04</text><text x="930" y="510" fill="#eef2fc">小额验证</text></g>
 </svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="line" x1="0" x2="1"><stop stop-color="#4f8ef7"/><stop offset=".55" stop-color="#7868ff"/><stop offset="1" stop-color="#33d5c5"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#4f8ef7" stop-opacity=".24"/><stop offset="1" stop-color="#070b14" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#070b14"/>
+  <circle cx="210" cy="110" r="390" fill="url(#glow)"/>
+  <rect width="1200" height="6" fill="url(#line)"/>
+  <g fill="none" stroke="#1b2438"><path d="M80 475h1040"/><path d="M80 525h1040"/><path d="M80 575h1040"/></g>
+  <text x="82" y="105" fill="#4f8ef7" font-family="monospace" font-size="24" font-weight="700" letter-spacing="5">AI API SERVICE INDEX</text>
+  <text x="78" y="250" fill="#eef2fc" font-family="sans-serif" font-size="78" font-weight="700">AI 中转站推荐</text>
+  <text x="78" y="350" fill="url(#line)" font-family="sans-serif" font-size="78" font-weight="700">排行榜与选择指南</text>
+  <text x="82" y="430" fill="#8896b3" font-family="sans-serif" font-size="28">最多收录 500 家 · 静态 HTML · 每日自动更新</text>
+  <g font-family="monospace" font-size="22"><text x="90" y="510" fill="#4f8ef7">01</text><text x="150" y="510" fill="#eef2fc">运行表现</text><text x="350" y="510" fill="#4f8ef7">02</text><text x="410" y="510" fill="#eef2fc">模型覆盖</text><text x="610" y="510" fill="#4f8ef7">03</text><text x="670" y="510" fill="#eef2fc">服务政策</text><text x="870" y="510" fill="#4f8ef7">04</text><text x="930" y="510" fill="#eef2fc">小额验证</text></g>
+</svg>

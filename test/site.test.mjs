@@ -21,9 +21,11 @@ async function htmlFiles(directory = root) {
 
 test("首页包含完整 SEO 和静态榜单", async () => {
   const html = await text("index.html");
+  const data = JSON.parse(await text("data.json"));
+  const [year, month, day] = data.updatedDate.split("-").map(Number);
   assert.match(html, /<title>2026最全中转站推荐<\/title>/);
   assert.match(html, /<meta name="description"/);
-  assert.match(html, /<time datetime="2026-08-03">2026年8月3日<\/time>/);
+  assert.match(html, new RegExp(`<time datetime="${data.updatedDate}">${year}年${month}月${day}日<\\/time>`));
   assert.doesNotMatch(html, /家收录了简介/);
   assert.match(html, /<link rel="canonical" href="https:\/\/airecommended\.github\.io\/"/);
   assert.match(html, /application\/ld\+json/);

@@ -11,11 +11,40 @@ const MINIFIED_STYLES_PATH = path.join(ROOT, "assets", "styles.min.css");
 const SOURCE_URL = process.env.DATA_SOURCE_URL
   || "https://raw.githubusercontent.com/hvoyai/awesome-ai-api/main/data.json";
 const ORIGIN = "https://airecommended.github.io";
-const SITE_NAME = "2026最全中转站推荐";
+const SITE_NAME = "2026 API 中转站推荐";
 const PAGE_SIZE = 50;
 const MAX_SITES = 500;
+const FEATURED_SITE_COUNT = 5;
 const SHOULD_SYNC = process.argv.includes("--sync");
 const number = new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 1 });
+
+const FEATURED_PROFILES = {
+  1: {
+    label: "综合入门首选",
+    pitch: "适合第一次接入中转 API 的开发者：配置路径直接，主流模型覆盖均衡，可先用小额预算完成多模型横向测试。",
+    strengths: ["接入简单", "主流模型齐全", "国内支付友好"],
+  },
+  2: {
+    label: "多模型聚合优选",
+    pitch: "适合同时使用 GPT、Claude、Gemini 与国内模型的项目：一个 Key 管理多种模型，更方便做路由切换和成本比较。",
+    strengths: ["模型覆盖广", "统一账单", "适合 Agent 开发"],
+  },
+  3: {
+    label: "企业项目候选",
+    pitch: "面向在意并发、售后和财务流程的团队：可作为生产候选进行 SLA、发票、失败重试和晚高峰稳定性验收。",
+    strengths: ["团队接入", "并发场景", "服务支持"],
+  },
+  4: {
+    label: "开发工具兼容优选",
+    pitch: "适合 Claude Code、Codex、Cursor 和自建应用：重点关注 OpenAI 兼容接口、调用日志、预算限制与故障回退能力。",
+    strengths: ["工具兼容", "调用可观测", "预算管理"],
+  },
+  5: {
+    label: "备用线路推荐",
+    pitch: "适合作为主站之外的第二条线路：用少量余额保持可用，在主接口限流或故障时快速切换，降低单点中断风险。",
+    strengths: ["备用路由", "小额试用", "主备切换"],
+  },
+};
 
 const FAQ = [
   {
@@ -285,21 +314,11 @@ function status(value) {
   return value === true ? "支持" : value === false ? "不支持" : "待确认";
 }
 
-function stableNoise(value) {
-  let hash = 2166136261;
-  for (const char of value) {
-    hash ^= char.codePointAt(0);
-    hash = Math.imul(hash, 16777619);
-  }
-  return ((hash >>> 0) / 4294967295) * 2 - 1;
-}
-
-function lightlyShuffleSites(sites, seed) {
+function rankSites(sites) {
   return sites
     .slice(0, MAX_SITES)
-    .map((site) => ({ ...site, orderScore: site.rank + stableNoise(`${seed}:${site.name}`) * 1.35 }))
-    .sort((a, b) => a.orderScore - b.orderScore || a.rank - b.rank)
-    .map(({ orderScore: _orderScore, ...site }, index) => ({ ...site, sourceRank: site.rank, rank: index + 1 }));
+    .sort((a, b) => a.rank - b.rank)
+    .map((site, index) => ({ ...site, sourceRank: site.rank, rank: index + 1 }));
 }
 
 function median(values) {
@@ -395,6 +414,7 @@ function renderTags(items, empty = "暂未注明") {
 
 function renderSite(site) {
   const url = escapeHtml(site.url);
+  const profile = FEATURED_PROFILES[site.rank];
   const rating = site.userRating === null || site.ratingCount === 0
     ? "暂无评分"
     : `${number.format(site.userRating)} / 5 · ${site.ratingCount} 条评价`;
@@ -408,6 +428,13 @@ ${paragraphs(site.description)}
                   </div>
                 </details>`
     : "";
+  const featuredProfile = profile
+    ? `<section class="station-highlight" aria-label="${escapeHtml(site.name)} 的编辑推荐特色">
+                <div><span>编辑定位</span><strong>${escapeHtml(profile.label)}</strong></div>
+                <p>${escapeHtml(profile.pitch)}</p>
+                <ul>${profile.strengths.map((strength) => `<li>${escapeHtml(strength)}</li>`).join("")}</ul>
+              </section>`
+    : "";
 
   return `            <article class="station-card" id="rank-${site.rank}" aria-labelledby="station-${site.rank}">
               <div class="station-card__head">
@@ -418,6 +445,7 @@ ${paragraphs(site.description)}
                 </div>
               </div>
 ${fullDescription}
+${featuredProfile}
               <dl class="metric-grid">
                 <div><dt>在线率</dt><dd>${formatUptime(site.uptime)}</dd></div>
                 <div><dt>平均延迟</dt><dd>${formatLatency(site.latencyMs)}</dd></div>
@@ -583,7 +611,7 @@ function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <header class="topbar">
-      <a class="wordmark" href="../" aria-label="${SITE_NAME}首页"><span>2026最全中转站</span><strong>推荐</strong></a>
+      <a class="wordmark" href="../" aria-label="${SITE_NAME}首页"><span>2026 API 中转站</span><strong>推荐</strong></a>
       <nav aria-label="主要导航"><a href="../#ranking">推荐榜</a><a href="../#topics">模型专题</a><a href="../#guide">怎么选</a><a href="../#faq">常见问题</a></nav>
     </header>
     <main id="main">
@@ -606,17 +634,41 @@ function renderTopicPage({ topic, sites, allMatches, allSites, updatedDate }) {
 
       <section class="faq-section topic-faq" id="faq" aria-labelledby="topic-faq-title"><div class="section-kicker">专题常见问题</div><h2 id="topic-faq-title">${escapeHtml(topic.label)}常见问题</h2><div class="faq-list">${faq.map(([question, answer]) => `<details class="faq-item"><summary>${escapeHtml(question)}</summary><div class="faq-answer"><p>${escapeHtml(answer)}</p></div></details>`).join("")}</div></section>
     </main>
-    <footer class="footer"><a class="wordmark" href="../"><span>2026最全中转站</span><strong>推荐</strong></a><p>更新于 ${formatChineseDate(updatedDate)}；公开信息用于初筛，使用 ${escapeHtml(topic.label)} 前请自行小额测试。</p><a href="#main">返回顶部 ↑</a></footer>
+    <footer class="footer"><a class="wordmark" href="../"><span>2026 API 中转站</span><strong>推荐</strong></a><p>更新于 ${formatChineseDate(updatedDate)}；公开信息用于初筛，使用 ${escapeHtml(topic.label)} 前请自行小额测试。</p><a href="#main">返回顶部 ↑</a></footer>
   </body>
 </html>`;
 }
 
-function homeGuide() {
+function homeGuide(featuredSites) {
   const faq = FAQ.map(({ question, answer }) => `            <details class="faq-item">
               <summary>${escapeHtml(question)}</summary>
               <div class="faq-answer">${answer.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}</div>
             </details>`).join("\n");
-  return `      <section class="decision-guide" id="guide" aria-labelledby="guide-title">
+  const byModels = [...featuredSites].sort((a, b) => b.modelCount - a.modelCount)[0];
+  const byUptime = [...featuredSites].filter((site) => site.uptime !== null).sort((a, b) => b.uptime - a.uptime)[0] || featuredSites[0];
+  const forEnterprise = featuredSites.find((site) => site.supportsInvoice) || byUptime;
+  const forClaude = featuredSites.find((site) => site.models.some((model) => /anthropic|claude/i.test(model))) || byModels;
+  const forDomestic = featuredSites.find((site) => site.models.some((model) => /阿里|智谱|月之暗面|deepseek|qwen|kimi/i.test(model))) || byModels;
+  const backup = featuredSites[1] || featuredSites[0];
+  return `      <section class="explainer-section" id="about" aria-labelledby="about-title">
+        <div class="section-kicker">先说结论</div>
+        <h2 id="about-title">API 中转站是便利服务，但不能替代供应链审查</h2>
+        <p class="answer-block">API 中转站也叫 Token 中转、API 代理或模型聚合平台。它位于开发者与模型厂商之间，用一个 Base URL 和 API Key 转发 GPT、Claude、Gemini 等模型请求，并提供人民币充值、统一账单和接口兼容。它解决真实接入问题，同时增加了上游、隐私与余额风险。</p>
+        <div class="pain-grid">
+          <article><span>01 / ACCESS</span><h3>官方 API 难以直接使用</h3><p>网络、海外信用卡、手机号和账号风控都会增加接入成本。中转站通常支持国内网络、支付宝或微信，并把注册与付款环节集中到一个后台。</p></article>
+          <article><span>02 / COST</span><h3>希望按量使用并控制成本</h3><p>个人开发者不一定需要包月订阅。中转站可按 Token 计费，也可能通过批量采购、活动或账号池降低价格，但折扣越大越应确认来源与限制。</p></article>
+          <article><span>03 / ROUTING</span><h3>一个接口接入多个模型</h3><p>统一接口能减少 SDK 适配工作，并支持模型切换、故障回退和用量统计。生产环境仍应准备不同上游的备用 Key，避免把聚合平台变成新的单点故障。</p></article>
+        </div>
+        <aside class="editor-note"><strong>核心判断：</strong>不要问“哪家永远最好”，而要问“哪家上游、协议、账单和风险更适合我的任务”。排名只用于建立 3–5 家候选，最终结论必须来自自己的小额实测。</aside>
+        <div class="risk-grid" aria-label="使用 API 中转站的四类主要风险">
+          <article><strong>模型降级</strong><span>付高阶模型价格，实际被映射到低阶模型或压缩上下文。</span></article>
+          <article><strong>余额损失</strong><span>上游风控或平台停运可能造成服务中断和未用余额难退。</span></article>
+          <article><strong>数据泄露</strong><span>运营方理论上可能接触 Prompt、输出、代码和调用日志。</span></article>
+          <article><strong>合规边界</strong><span>跨境数据、未授权转售和生成内容责任需按业务所在地核查。</span></article>
+        </div>
+      </section>
+
+      <section class="decision-guide" id="guide" aria-labelledby="guide-title">
         <div class="section-kicker">选择方法</div>
         <h2 id="guide-title">选择中转站，不要只比较倍率</h2>
         <p class="section-lead">中转站是一层位于客户端和模型服务之间的网关。真正影响长期体验的，是上游来源是否说明、价格能否复算、高峰期是否稳定、模型能力是否完整，以及发生故障后有没有清楚的处理入口。</p>
@@ -633,10 +685,24 @@ function homeGuide() {
 
       <section class="cost-section" id="pricing" aria-labelledby="pricing-title">
         <div class="cost-intro">
-          <div class="section-kicker">价格与倍率</div>
-          <h2 id="pricing-title">先把“0.1 倍”翻译成实际人民币</h2>
-          <p>倍率只是价格公式中的一项。平台还可能把官方美元标价换算成自己的记账单位，并对输入、输出、缓存、图片或不同用户分组分别定价。</p>
+          <div class="section-kicker">主流模型价格参考</div>
+          <h2 id="pricing-title">先看合理区间，再复算自己的真实账单</h2>
+          <p>下表是 2026 年常见中转渠道的人民币估算区间，统一按每百万 Token 展示。它适合做预算和识别异常报价，不是任何平台的实时承诺；模型版本、输入输出比例、缓存、渠道类型和活动都会改变最终价格。</p>
         </div>
+        <div class="table-wrap" role="region" aria-label="主流 AI 模型中转价格参考" tabindex="0">
+          <table class="price-table">
+            <thead><tr><th scope="col">热门模型系列</th><th scope="col">输入参考价</th><th scope="col">输出参考价</th><th scope="col">常见用途</th><th scope="col">选购重点</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">GPT 5 系列</th><td>¥2–15 / MTok</td><td>¥15–100 / MTok</td><td>编程、Agent、通用推理</td><td>Responses API、工具调用、版本映射</td></tr>
+              <tr><th scope="row">Claude Sonnet 系列</th><td>¥3–25 / MTok</td><td>¥15–120 / MTok</td><td>Claude Code、长文本、代码</td><td>缓存、长输出、Anthropic 原生协议</td></tr>
+              <tr><th scope="row">Claude Opus 系列</th><td>¥8–60 / MTok</td><td>¥40–300 / MTok</td><td>复杂推理、高质量代码</td><td>防模型降级、限流、号池稳定性</td></tr>
+              <tr><th scope="row">Gemini Flash / Pro</th><td>¥0.5–20 / MTok</td><td>¥3–80 / MTok</td><td>长上下文、多模态、批处理</td><td>文件限制、上下文长度、区域通道</td></tr>
+              <tr><th scope="row">DeepSeek V3 / R1</th><td>¥0.5–5 / MTok</td><td>¥2–20 / MTok</td><td>中文、推理、低成本调用</td><td>官方与第三方版本、峰值限流</td></tr>
+              <tr><th scope="row">Qwen / GLM / Kimi</th><td>¥0.5–8 / MTok</td><td>¥2–30 / MTok</td><td>中文、长文档、国内业务</td><td>具体型号、多模态、上下文和发票</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="price-caption"><strong>如何使用区间：</strong>报价落在区间内不代表可靠；远低于区间时，重点询问是否为订阅号池、第三方适配、限时补贴或模型映射。企业生产应优先看来源、SLA、日志政策和合同，而不是最低单价。</p>
         <div class="formula-card" role="group" aria-label="中转站实际扣款估算公式">
           <span>实际扣款约等于</span>
           <code>官方标价折算用量 × 平台币换算系数 × 用户倍率</code>
@@ -647,6 +713,20 @@ function homeGuide() {
           <article><span>示例 B</span><h3>1 美元额度 = 7 元人民币</h3><p>同样是 5 美元用量和 0.1 倍率，充值换算不同：</p><code>5 × 7 × 0.1 = 3.5 元</code></article>
         </div>
         <p class="cost-note"><strong>比较时至少记录：</strong>1 元人民币能买多少平台额度、输入与输出单价、缓存写入与命中价格、模型倍率、用户分组倍率，以及一次真实请求的 Token 与最终扣款。面板中的“美元”可能只是官方标价等值单位，并不等于可提现的美元或官方账户余额。</p>
+      </section>
+
+      <section class="scenario-section" id="scenarios" aria-labelledby="scenario-title">
+        <div class="section-kicker">场景化推荐示例</div>
+        <h2 id="scenario-title">不同需求，候选站的排法也不同</h2>
+        <p class="section-lead">以下示例使用本期前五名公开字段做初筛，不构成质量背书。点击候选站查看最新信息后，仍要用相同任务、相同时间段和相同预算做横向测试。</p>
+        <div class="scenario-grid">
+          <article><span>个人开发者</span><h3>多模型 + 国内支付</h3><p>先试 <strong>${escapeHtml(byModels.name)}</strong>。其公开模型数量在前五名中较多，适合用一个 Key 试用不同厂商；重点核对各模型是否来自相同渠道类型。</p></article>
+          <article><span>企业生产</span><h3>稳定性 + 服务凭证</h3><p>可把 <strong>${escapeHtml(forEnterprise.name)}</strong> 放入候选。公开信息包含${forEnterprise.supportsInvoice ? "发票支持" : "较好的运行指标"}；签约前还需确认主体、SLA、日志留存和数据用途。</p></article>
+          <article><span>Claude Code</span><h3>长任务 + 缓存连续性</h3><p>先测试 <strong>${escapeHtml(forClaude.name)}</strong> 的 Anthropic 通道。至少连续跑 20 次代码任务，并验证 Prompt Caching、工具调用和晚高峰断流。</p></article>
+          <article><span>中文与国内模型</span><h3>DeepSeek / Qwen / GLM / Kimi</h3><p><strong>${escapeHtml(forDomestic.name)}</strong> 的公开模型标签更接近该场景。不要只看厂商名，还要确认具体型号、上下文、多模态能力与版本更新频率。</p></article>
+          <article><span>质量优先</span><h3>先用运行指标筛选</h3><p><strong>${escapeHtml(byUptime.name)}</strong> 在本期前五名的公开在线率靠前，可作为第一轮候选；在线率不是模型质量，仍需检查复杂任务输出与失败重试。</p></article>
+          <article><span>主备架构</span><h3>两个独立上游比一个大余额更重要</h3><p>可把 <strong>${escapeHtml(featuredSites[0].name)}</strong> 作为主候选、<strong>${escapeHtml(backup.name)}</strong> 作为备用候选。确认两者不是同一二级上游，并在代码中预留 Base URL 快速切换。</p></article>
+        </div>
       </section>
 
       <section class="channel-section" aria-labelledby="channel-title">
@@ -762,18 +842,17 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
   const first = (page - 1) * PAGE_SIZE + 1;
   const last = first + sites.length - 1;
   const title = page === 1
-    ? SITE_NAME
+    ? `${SITE_NAME}：5家精选平台、价格对比与选择指南`
     : `${SITE_NAME}第 ${page} 页｜排名 ${first}–${last}`;
   const description = page === 1
-    ? `${SITE_NAME}，更新于${formatChineseDate(updatedDate)}，收录 ${allSites.length} 家 AI API 中转站。完整对比站点简介、成立日期、在线率、响应延迟、模型厂商与数量、用户评价、支付方式、退款和发票政策，并提供价格倍率复算、上游类型判断、稳定性测试、隐私安全与接入前验收指南。`
+    ? `${SITE_NAME}，更新于${formatChineseDate(updatedDate)}。精选排名前 ${sites.length} 家平台，对比 GPT、Claude、Gemini、DeepSeek 等主流模型的人民币价格区间，并提供上游来源、稳定性、隐私风险、场景推荐和接入测试指南。`
     : `${SITE_NAME}第 ${page} 页，更新于${formatChineseDate(updatedDate)}。查看排名 ${first} 至 ${last} 的 AI API 中转站完整简介、成立日期、在线率、延迟、模型厂商与数量、用户评分、支付方式、退款和发票信息，并参考计费、稳定性与安全选择指南。`;
   const stats = pageStats(sites);
   const relations = pageRelations(page, totalPages);
-  const jsonLd = renderStructuredData({ page, canonical, title, description, sites, totalSites: allSites.length, updatedDate });
+  const jsonLd = renderStructuredData({ page, canonical, title, description, sites, totalSites: sites.length, updatedDate });
   const hero = page === 1
-    ? `<p class="eyebrow">AI API SERVICE INDEX · ${updatedDate.replaceAll("-", ".")}</p>
-          <h1>2026最全中转站推荐</h1>
-          <p class="hero-copy">完整收录站点简介、成立日期、运行表现、模型厂商、用户评价、支付方式、退款与发票政策；先横向比较，再用真实任务小额验证。</p>
+    ? `<p class="eyebrow">2026 API ROUTER FIELD GUIDE · ${updatedDate.replaceAll("-", ".")}</p>
+          <h1>API 中转站推荐：<em>5 家精选与选型指南</em></h1>
           <p class="update-note"><strong>页面更新：</strong><time datetime="${updatedDate}">${formatChineseDate(updatedDate)}</time> · 数据会随线路状态、价格和站点政策变化，请以站点实时信息为准。</p>
           <div class="hero-actions"><a href="#ranking">浏览推荐榜</a><a href="#guide">阅读选择方法</a></div>`
     : `<p class="eyebrow">RANKING PAGE ${String(page).padStart(2, "0")} · ${updatedDate.replaceAll("-", ".")}</p>
@@ -817,8 +896,8 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <header class="topbar">
-      <a class="wordmark" href="${root}/" aria-label="${SITE_NAME}首页"><span>2026最全中转站</span><strong>推荐</strong></a>
-      <nav aria-label="主要导航"><a href="${root}/#ranking">推荐榜</a><a href="${root}/#topics">模型专题</a><a href="${root}/#guide">怎么选</a><a href="${root}/#faq">常见问题</a></nav>
+      <a class="wordmark" href="${root}/" aria-label="${SITE_NAME}首页"><span>2026 API 中转站</span><strong>推荐</strong></a>
+      <nav aria-label="主要导航"><a href="${root}/#ranking">前五名</a><a href="${root}/#guide">怎么选</a><a href="${root}/#pricing">价格</a><a href="${root}/#scenarios">场景</a><a href="${root}/#faq">问答</a></nav>
     </header>
     <main id="main">
       ${renderBreadcrumbs(page, root)}
@@ -827,28 +906,27 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate }) {
           ${hero}
         </div>
         <aside class="hero__panel" aria-label="榜单概览">
-          <p>本期收录</p><strong>${allSites.length}</strong><span>家 AI API 中转站</span>
-          <dl><div><dt>当前页</dt><dd>${page} / ${totalPages}</dd></div><div><dt>本页范围</dt><dd>${first}–${last}</dd></div><div><dt>更新时间</dt><dd><time datetime="${updatedDate}">${updatedDate}</time></dd></div></dl>
+          <p>本期精选</p><strong>${sites.length}</strong><span>家排名靠前的 API 中转站</span>
+          <dl><div><dt>模型价格</dt><dd>6 类</dd></div><div><dt>选型案例</dt><dd>6 个</dd></div><div><dt>更新时间</dt><dd><time datetime="${updatedDate}">${updatedDate}</time></dd></div></dl>
         </aside>
       </section>
 
       <section class="ranking" id="ranking" aria-labelledby="ranking-title">
         <div class="ranking-head">
-          <div><p>RANKING / ${String(page).padStart(2, "0")}</p><h2 id="ranking-title">中转站推荐列表</h2></div>
-          <p>当前显示第 ${first}–${last} 名，共 ${allSites.length} 家</p>
+          <div><p>SHORTLIST / TOP ${sites.length}</p><h2 id="ranking-title">本期中转站前五名</h2></div>
+          <p>按数据源原始名次展示，不做随机调序</p>
         </div>
         <p class="ranking-note">指标会随线路和服务状态变化。建议结合自己的网络、模型与调用方式进行小额测试，不要仅凭单次测速或宣传价格决定长期使用。</p>
         ${renderPageAnalysis(stats, first, last)}
         <div class="station-list">
 ${sites.map(renderSite).join("\n")}
         </div>
-        ${renderPagination(page, totalPages)}
       </section>
 
-${page === 1 ? `${renderTopicDirectory(allSites)}\n\n${homeGuide()}` : `      <section class="page-continue"><p>已经看完第 ${page} 页？</p><h2>回到选择指南，建立自己的测试标准</h2><a href="${root}/#guide">阅读中转站选择方法 →</a></section>`}
+${page === 1 ? `${homeGuide(sites)}\n\n${renderTopicDirectory(allSites)}` : `      <section class="page-continue"><p>已经看完第 ${page} 页？</p><h2>回到选择指南，建立自己的测试标准</h2><a href="${root}/#guide">阅读中转站选择方法 →</a></section>`}
     </main>
     <footer class="footer">
-      <a class="wordmark" href="${root}/"><span>2026最全中转站</span><strong>推荐</strong></a>
+      <a class="wordmark" href="${root}/"><span>2026 API 中转站</span><strong>推荐</strong></a>
       <p>页面更新于 ${formatChineseDate(updatedDate)}；先比较，后测试，少量充值并保留备用方案。</p>
       <a href="#main">返回顶部 ↑</a>
     </footer>
@@ -921,25 +999,22 @@ async function build() {
   validatePayload(payload);
   const updatedDate = normalizeDate(payload.updatedDate) || new Date().toISOString().slice(0, 10);
   const normalizedSites = payload.sites.map(normalizeSite).sort((a, b) => a.rank - b.rank);
-  const sites = lightlyShuffleSites(normalizedSites, updatedDate);
-  const totalPages = Math.ceil(sites.length / PAGE_SIZE);
+  const sites = rankSites(normalizedSites);
+  const totalPages = 1;
+  const featuredSites = sites.slice(0, FEATURED_SITE_COUNT);
   const topicPages = TOPICS.map((topic) => {
     const matches = sites.filter((site) => topicMatches(site, topic));
-    return { topic, matches, html: renderTopicPage({ topic, sites: matches.slice(0, PAGE_SIZE), allMatches: matches, allSites: sites, updatedDate }) };
+    return { topic, matches, html: renderTopicPage({ topic, sites: matches.slice(0, FEATURED_SITE_COUNT), allMatches: matches, allSites: sites, updatedDate }) };
   });
   await cleanOldPages(totalPages);
   await atomicWrite(MINIFIED_STYLES_PATH, minifyCss(await readFile(STYLES_PATH, "utf8")));
 
-  for (let page = 1; page <= totalPages; page += 1) {
-    const pageSites = sites.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-    const target = page === 1 ? path.join(ROOT, "index.html") : path.join(PAGE_ROOT, String(page), "index.html");
-    await atomicWrite(target, minifyHtml(renderPage({ page, totalPages, sites: pageSites, allSites: sites, updatedDate })));
-  }
+  await atomicWrite(path.join(ROOT, "index.html"), minifyHtml(renderPage({ page: 1, totalPages, sites: featuredSites, allSites: sites, updatedDate })));
   for (const { topic, html } of topicPages) {
     await atomicWrite(path.join(ROOT, topic.slug, "index.html"), minifyHtml(html));
   }
   await atomicWrite(path.join(ROOT, "sitemap.xml"), renderSitemap(totalPages, updatedDate));
-  process.stdout.write(`已生成 ${totalPages} 个分页、${topicPages.length} 个模型专题，共 ${sites.length} 个站点；数据日期 ${updatedDate}\n`);
+  process.stdout.write(`已生成前 ${featuredSites.length} 家精选、${topicPages.length} 个模型专题；数据池 ${sites.length} 家，数据日期 ${updatedDate}\n`);
 }
 
 await build();

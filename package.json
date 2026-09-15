@@ -6,6 +6,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "sync": "node scripts/build.mjs --sync",
-    "test": "node --test"
+    "test": "node --test",
+    "sync:db": "node scripts/export-database.mjs && node scripts/build.mjs",
+    "sync:all": "node scripts/export-database.mjs && node scripts/build.mjs --sync"
   }
 }

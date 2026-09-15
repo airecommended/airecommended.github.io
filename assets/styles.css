@@ -566,3 +566,34 @@ main { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; padding: 20px 
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+/* Compact directory: four stations per desktop row. */
+.directory-page { --max: 1440px; }
+.directory-hero { display: flex; justify-content: space-between; align-items: center; gap: 32px; padding: 46px 0 36px; }
+.directory-hero h1 { font-size: clamp(32px, 4vw, 52px); line-height: 1.2; letter-spacing: -1px; margin: 12px 0 20px; }
+.directory-hero h1 span { display: block; color: var(--cyan); }
+.directory-hero p { color: #aab8cf; }
+.directory-hero aside { flex-shrink: 0; text-align: right; }
+.directory-hero aside strong { display: block; font: 64px/1.2 var(--mono); letter-spacing: -4px; }
+.directory-hero aside span { color: var(--muted); }
+.directory-topics { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.directory-topics a { padding: 8px 14px; border: 1px solid var(--line-bright); border-radius: 5px; font-size: 14px; }
+.directory-topics a:hover, .directory-topics a[aria-current] { color: var(--cyan); border-color: var(--cyan); }
+.source-details { color: var(--muted); font-size: 14px; margin: 16px 0 28px; }
+.directory-ranking .ranking-head h2 { font-size: 23px; }
+.directory-ranking .ranking-head h2 span { color: var(--muted); font-weight: 400; }
+.station-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.station-list .station-card { display: flex; flex-direction: column; gap: 10px; padding: 20px; min-width: 0; border-radius: 8px; grid-template-areas: none; content-visibility: auto; contain-intrinsic-size: auto 218px; }
+.compact-card-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.catalog-number { color: #8297b8; font: 14px var(--mono); }
+.catalog-kind { color: #a5bdcf; font-size: 14px; }
+.station-list .station-card h2 { font-size: 19px; line-height: 1.4; margin: 0; overflow-wrap: anywhere; }
+.station-list .station-card h2 a { display: flex; justify-content: space-between; gap: 8px; }
+.station-list .station-card h2 span { color: var(--cyan); font-size: 16px; flex-shrink: 0; }
+.compact-description { font-size: 14px; line-height: 1.75; margin: 0; color: #b5c3d9; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.compact-card-foot { color: #8ca5ba; font-size: 14px; margin: auto 0 0; padding-top: 10px; border-top: 1px solid #ffffff0d; }
+.directory-ranking .pagination { margin: 18px 0; }
+.directory-note { margin: 40px 0; color: var(--muted); font-size: 14px; }
+.directory-note h2 { color: #bac8da; font-size: 18px; }
+@media (max-width: 1000px) { .station-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .directory-hero aside strong { font-size: 44px; } }
+@media (max-width: 600px) { .station-list { grid-template-columns: minmax(0, 1fr); } .directory-hero { align-items: flex-start; flex-direction: column; gap: 8px; padding: 24px 0; } .directory-hero aside { text-align: left; } .directory-hero aside strong { font-size: 36px; letter-spacing: -1px; } .directory-ranking .ranking-head { align-items: flex-start; flex-direction: column; } .page-numbers { flex-wrap: wrap; } }

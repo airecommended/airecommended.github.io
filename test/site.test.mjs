@@ -19,26 +19,16 @@ async function htmlFiles(directory = root) {
   return nested.flat();
 }
 
-test("首页包含完整 SEO、前五名和选型文章", async () => {
+test("首页展示1000家简短卡片及来源日期", async () => {
   const html = await text("index.html");
-  const data = JSON.parse(await text("data.json"));
-  const [year, month, day] = data.updatedDate.split("-").map(Number);
-  assert.match(html, /<title>2026 API 中转站推荐：5家精选平台、价格对比与选择指南<\/title>/);
+  const data = JSON.parse(await text("combined-data.json"));
+  assert.match(html, /站点目录<\/title>/);
   assert.match(html, /<meta name="description"/);
-  assert.match(html, new RegExp(`<time datetime="${data.updatedDate}">${year}年${month}月${day}日<\\/time>`));
-  assert.doesNotMatch(html, /家收录了简介/);
-  assert.match(html, /<link rel="canonical" href="https:\/\/airecommended\.github\.io\/"/);
-  assert.match(html, /application\/ld\+json/);
-  assert.match(html, /"FAQPage"/);
+  assert.match(html, new RegExp(`dateModified":"${data.updatedDate}"`));
   assert.match(html, /"ItemList"/);
-  assert.equal((html.match(/class="station-card"/g) || []).length, 5);
-  assert.equal((html.match(/class="station-highlight"/g) || []).length, 5);
-  for (const label of ["综合入门首选", "多模型聚合优选", "企业项目候选", "开发工具兼容优选", "备用线路推荐"]) {
-    assert.match(html, new RegExp(label));
-  }
-  assert.match(html, /主流 AI 模型中转价格参考/);
-  assert.match(html, /场景化推荐示例/);
-  assert.match(html, /GPT 5 系列/);
+  assert.equal((html.match(/class="station-card"/g) || []).length, Math.min(1000, data.sites.length));
+  assert.doesNotMatch(html, /class="station-highlight"|class="metric-grid"/);
+  assert.match(html, /每页 1000 家/);
 });
 
 test("榜单文字不小于 14px 且站点行使用交替配色", async () => {
@@ -51,14 +41,18 @@ test("榜单文字不小于 14px 且站点行使用交替配色", async () => {
   assert.match(css, /\.station-card:nth-child\(4n \+ 2\)/);
 });
 
-test("首页只展示前五名且不再生成长榜单分页", async () => {
-  const data = JSON.parse(await text("data.json"));
-  assert.ok(data.sites.length >= 50);
-  const dirs = (await readdir(new URL("../page", import.meta.url), { withFileTypes: true }))
-    .filter((entry) => entry.isDirectory() && /^\d+$/.test(entry.name));
-  assert.equal(dirs.length, 0);
-  const html = await text("index.html");
-  assert.equal((html.match(/class="station-card"/g) || []).length, 5);
+test("分页覆盖所有站点且没有重复或遗漏", async () => {
+  const data = JSON.parse(await text("combined-data.json"));
+  const total = Math.ceil(data.sites.length / 1000);
+  const ids = [];
+  for (let page = 1; page <= total; page++) {
+    const html = await text(page === 1 ? "index.html" : `page/${page}/index.html`);
+    const entries = [...html.matchAll(/class="station-card" id="rank-(\d+)"/g)].map(m => Number(m[1]));
+    assert.equal(entries.length, Math.min(1000, data.sites.length - (page - 1) * 1000));
+    ids.push(...entries);
+  }
+  assert.deepEqual(ids, Array.from({ length: data.sites.length }, (_, i) => i + 1));
+  assert.match(await text("assets/styles.css"), /grid-template-columns: repeat\(4, minmax\(0, 1fr\)\)/);
 });
 
 test("关键爬虫文件和专题页存在", async () => {
@@ -73,7 +67,7 @@ test("关键爬虫文件和专题页存在", async () => {
 
 test("全部 HTML 的 ID、JSON-LD、canonical 与站内链接有效", async () => {
   const files = await htmlFiles();
-  assert.equal(files.length, 9);
+  assert.ok(files.length >= 20);
   for (const file of files) {
     const html = await readFile(file, "utf8");
     const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);

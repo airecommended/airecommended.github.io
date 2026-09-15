@@ -1,26 +1,32 @@
 # 2026 API 中转站推荐
 
-面向 GitHub Pages 的原生静态 HTML 选型指南。首页只展示数据源排名前 5 家 AI API 中转站，并提供主流模型价格区间、场景化推荐、渠道风险和接入验收方法。
+GitHub Pages 静态站点：每页 1000 家的完整站点目录和七个模型专题，桌面每排 4 家、平板 2 家、手机 1 家。卡片展示名称、检测成功率、累计检测次数、成功次数和最近检测日期；无检测样本时展示简短公开介绍。
 
-## 本地运行
+## 两路数据
+
+1. `data.json`：与相邻 `apizhongzhuan.github.io` 相同，从 `https://raw.githubusercontent.com/hvoyai/awesome-ai-api/main/data.json` 获取最新公开榜单。支持 `DATA_SOURCE_URL` 覆盖；最多重试三次，失败时明确告警并使用已验证的本地快照，拒绝时间倒退，不限制站点数。
+2. `database.json`：本地 PostgreSQL 导出的公开站点资料，来自 `relay_sites`、`relay_site_details`、公开排名、已批准评价、活跃模型目录，以及按站点域名关联的已完成 `detection_runs` 历史统计。只导出明确列出的公开字段和聚合统计，不导出凭据、请求响应或访问者信息。同时提取没有站点资料的历史检测域名，展示检测统计；剔除 IP、本机、内网、保留域名和无效地址，只保留域名和聚合模型/检测信息，不保留原始接口路径或查询参数。
+
+构建按详情页 slug / 域名合并至 `combined-data.json`。新来源优先，旧来源补缺；模型列表取并集。排名、在线率、延迟单独按排名更新时间比较；检测通过率不充当在线率。检测成功率以成功次数除以全部检测次数计算，失败与错误都计入分母，不把无样本站点显示为 0% 或 100%；卡片显示样本数量与最近检测日期。数据库可能是旧备份，导出时间不冒充数据更新时间。
+
+主目录和各模型专题都按每页最多 1000 家生成静态分页。序号表示目录位置，不将历史检测域名包装成排名推荐。各页面的数据说明分别标明两路数据日期。当前合并 11,926 家，主目录 12 页；数量随快照变化。
+
+## 本地更新
 
 ```bash
-npm run sync
+npm run sync:all   # 导出本地数据库 + 拉取公开榜单 + 构建
 npm test
 python3 -m http.server 4173
 ```
 
-访问 `http://localhost:4173/`。
+- `npm run sync`：只更新公开榜单，并使用已有数据库快照构建。
+- `npm run sync:db`：只更新数据库快照并构建。
+- `npm run build`：从现有两个快照构建，不访问网络或数据库。
 
-## 数据和排序
+默认数据库：`localhost:55432`，用户 `postgres`，库 `hvoyverify`。需要系统安装 `psql`；可通过 `PSQL_BIN`、`PGHOST`、`PGPORT`、`PGUSER`、`PGDATABASE`、`PGPASSWORD` 或 `.pgpass` 配置。导出使用只读一致性事务，失败保留原文件。
 
-- 默认从 `https://raw.githubusercontent.com/hvoyai/awesome-ai-api/main/data.json` 获取公开快照。
-- 构建阶段保留最多 500 条作为专题匹配数据池，首页严格展示原始榜单前 5 名。
-- 不对原始排名做随机扰动，不生成长榜单分页。
-- GPT、Claude、Codex、Gemini、GLM、Qwen、Kimi 专题页各展示匹配结果前 5 名。
+## 部署与持续更新
 
-## 部署
+GitHub Actions 在推送 main、手动触发、每天 UTC 02:17 时重新拉取最新公开榜单、构建、测试并部署。检测卡片的“最近检测”显示构建当天日期，每日任务会自动刷新。Pages Source 设为 GitHub Actions。数据只嵌入生成的 HTML 页面；JSON 文件仅作为构建中间快照，不参与页面访问。
 
-GitHub Actions 在推送到 `main`、手动触发以及每天 UTC 02:17 / 14:17 时同步数据、生成 HTML、测试并部署到 GitHub Pages。仓库的 Pages Source 需要设置为 **GitHub Actions**。
-
-生成内容包含 canonical、Open Graph、Twitter Card、JSON-LD、FAQ、Breadcrumb、ItemList、robots.txt 和 sitemap.xml。
+GitHub 托管 runner 无法连接本机 localhost。数据库变化后在本地运行 `npm run sync:all` 并提交更新后的快照及生成文件，推送后部署。仅线上定时任务不会刷新本地数据库快照；如需全自动数据库更新，应在可访问该数据库的可信机器上定时运行此命令并同步仓库。

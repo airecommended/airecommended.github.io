@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "17 2,14 * * *"
+    - cron: "17 2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Sync data and generate static HTML
+      - name: Sync latest public data and generate static HTML
         run: npm run sync
 
       - name: Verify generated site
@@ -42,7 +42,7 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir _site
-          cp index.html 404.html robots.txt sitemap.xml .nojekyll data.json _site/
+          cp index.html 404.html robots.txt sitemap.xml .nojekyll _site/
           cp -R assets page *-zhongzhuanzhan _site/
 
       - name: Upload static site

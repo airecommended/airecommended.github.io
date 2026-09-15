@@ -597,3 +597,48 @@ main { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; padding: 20px 
 .directory-note h2 { color: #bac8da; font-size: 18px; }
 @media (max-width: 1000px) { .station-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .directory-hero aside strong { font-size: 44px; } }
 @media (max-width: 600px) { .station-list { grid-template-columns: minmax(0, 1fr); } .directory-hero { align-items: flex-start; flex-direction: column; gap: 8px; padding: 24px 0; } .directory-hero aside { text-align: left; } .directory-hero aside strong { font-size: 36px; letter-spacing: -1px; } .directory-ranking .ranking-head { align-items: flex-start; flex-direction: column; } .page-numbers { flex-wrap: wrap; } }
+
+/* Editorial pages keep the source material readable while matching the directory. */
+.editorial-page { --border: var(--line); --bg-card: var(--panel); --bg-hover: var(--panel-strong); --text-1: var(--text); --text-2: #aab8cf; --text-3: var(--quiet); }
+.editorial-shell { width: min(100% - 48px, 980px); }
+.editorial-shell .home-light { color: var(--text); }
+.editorial-shell .cnt-narrow, .editorial-shell .news-wrap { max-width: 900px; margin: 0 auto; }
+.editorial-shell .cms-content, .editorial-shell .news-wrap { padding: 24px 0 72px; }
+.editorial-shell .cms-content a, .editorial-shell .news-wrap a { color: var(--cyan); }
+.editorial-shell .cms-content p, .editorial-shell .cms-content li { color: var(--text-2) !important; }
+.editorial-shell .cms-content h1, .editorial-shell .cms-content h2, .editorial-shell .cms-content h3, .editorial-shell .news-wrap h1, .editorial-shell .news-wrap h2 { color: var(--text) !important; }
+.editorial-shell .cms-content > *, .editorial-shell .news-wrap > * { max-width: 100%; }
+.editorial-hero { padding: 38px 0 28px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+.editorial-hero h1 { margin: 8px 0 16px; font-size: clamp(32px, 5vw, 54px); line-height: 1.16; letter-spacing: -.04em; }
+.editorial-hero h1 em { color: var(--cyan); font-style: normal; }
+.editorial-hero p:last-child { max-width: 680px; color: var(--muted); font-size: 17px; }
+.editorial-block { display: grid; grid-template-columns: 64px 1fr; gap: 18px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.editorial-block > span { color: var(--cyan); font: 700 26px var(--mono); }
+.editorial-block h2 { margin: 0 0 10px; }
+.editorial-block p { margin: 0; color: var(--text-2); line-height: 1.85; }
+.editorial-news .news-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.editorial-news .news-card { margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); transition: transform .2s, border-color .2s; }
+.editorial-news .news-card:hover { transform: translateY(-2px); border-color: var(--cyan); }
+.editorial-news .news-card a { display: block; padding: 20px; color: inherit; }
+.editorial-news .news-card h2 { margin: 0 0 10px; font-size: 19px; line-height: 1.45; }
+.editorial-news .news-card p { margin: 0 0 14px; color: var(--muted); line-height: 1.7; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+.editorial-news .news-card time { color: var(--quiet); font: 14px var(--mono); }
+.editorial-pagination { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.editorial-pagination a { padding: 8px 13px; border: 1px solid var(--line-bright); border-radius: 5px; }
+.editorial-pagination a[aria-current] { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
+.editorial-page .news-article { padding: 30px 0; }
+.editorial-page .news-article h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.25; margin: 0 0 12px; }
+.editorial-page .news-article-meta { color: var(--quiet); font: 14px var(--mono); margin-bottom: 28px; }
+.editorial-page .news-body { font-size: 17px; line-height: 1.9; }
+.editorial-page .news-body p, .editorial-page .news-body li { color: var(--text-2) !important; }
+.editorial-page .news-body strong { color: var(--text) !important; }
+.editorial-page .news-body h2, .editorial-page .news-body h3 { color: var(--text) !important; margin-top: 28px; }
+@media (max-width: 680px) { .editorial-shell { width: min(100% - 28px, 980px); } .editorial-news .news-grid { grid-template-columns: 1fr; } .editorial-block { grid-template-columns: 42px 1fr; gap: 12px; } .editorial-page .news-body { font-size: 16px; } }
+.channel-rewrite .channel-intro, .channel-rewrite .channel-cc, .channel-rewrite .channel-close { padding: 22px; margin: 22px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.channel-rewrite .channel-intro p, .channel-rewrite .channel-cc p, .channel-rewrite .channel-close p { color: var(--text-2); line-height: 1.85; }
+.channel-levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+.channel-levels div { display: grid; gap: 5px; padding: 14px; border-left: 3px solid var(--cyan); background: var(--bg-soft); }
+.channel-levels b { color: var(--text); }.channel-levels span { color: var(--muted); font-size: 14px; }
+.channel-rewrite table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 14px; }.channel-rewrite th, .channel-rewrite td { padding: 11px 12px; text-align: left; border-bottom: 1px solid var(--line); color: var(--text-2); }.channel-rewrite th { color: var(--text); background: var(--bg-soft); }
+.channel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }.channel-grid article { padding: 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }.channel-grid article:hover { border-color: var(--cyan); }.channel-num { color: var(--cyan); font: 700 20px var(--mono); }.channel-grid h2 { margin: 7px 0; font-size: 20px; }.channel-grid b { color: var(--cyan); font-size: 14px; }.channel-grid p { color: var(--text-2); line-height: 1.8; }.channel-grid strong { display: block; color: var(--text); line-height: 1.7; }
+@media (max-width: 680px) { .channel-levels, .channel-grid { grid-template-columns: 1fr; }.channel-rewrite table { font-size: 14px; } .channel-rewrite th, .channel-rewrite td { padding: 9px 7px; } }

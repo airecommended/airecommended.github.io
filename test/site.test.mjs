@@ -65,6 +65,18 @@ test("关键爬虫文件和专题页存在", async () => {
   }
 });
 
+test("新闻列表日期从构建日开始按文章顺序递减", async () => {
+  const html = await text("news/index.html");
+  const dates = [...html.matchAll(/<time>(\d{4}-\d{2}-\d{2})<\/time>/g)].map(match => match[1]);
+  assert.ok(dates.length >= 2);
+  assert.equal(dates[0], "2026-09-15");
+  for (let index = 1; index < dates.length; index += 1) {
+    const previous = new Date(`${dates[index - 1]}T00:00:00Z`);
+    previous.setUTCDate(previous.getUTCDate() - 1);
+    assert.equal(dates[index], previous.toISOString().slice(0, 10));
+  }
+});
+
 test("全部 HTML 的 ID、JSON-LD、canonical 与站内链接有效", async () => {
   const files = await htmlFiles();
   assert.ok(files.length >= 20);

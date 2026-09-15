@@ -1,0 +1,65 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 中转站怎么对接 Dify、Cursor 等工具？ | API 中转站推荐</title><meta name="description" content="AI 中转站（如小豆包、MKEAI 等）主要通过模拟主流 AI 工具（如 Cursor、Dify）所支持的官方 API 协议（如 OpenAI 兼容协议）进行对接。核心逻辑是：将中转站的 API 地址和 Key 填入工具的自定义模型配置中，"><link rel="canonical" href="https://airecommended.github.io/news/ai-dify-cursor/"><meta property="og:title" content="AI 中转站怎么对接 Dify、Cursor 等工具？"><meta property="og:description" content="AI 中转站（如小豆包、MKEAI 等）主要通过模拟主流 AI 工具（如 Cursor、Dify）所支持的官方 API 协议（如 OpenAI 兼容协议）进行对接。核心逻辑是：将中转站的 API 地址和 Key 填入工具的自定义模型配置中，"><meta property="og:url" content="https://airecommended.github.io/news/ai-dify-cursor/"><meta property="og:image" content="https://airecommended.github.io/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI 中转站怎么对接 Dify、Cursor 等工具？","name":"AI 中转站怎么对接 Dify、Cursor 等工具？","description":"AI 中转站（如小豆包、MKEAI 等）主要通过模拟主流 AI 工具（如 Cursor、Dify）所支持的官方 API 协议（如 OpenAI 兼容协议）进行对接。核心逻辑是：将中转站的 API 地址和 Key 填入工具的自定义模型配置中，","url":"https://airecommended.github.io/news/ai-dify-cursor/","dateModified":"2026-09-15"}</script></head><body class="editorial-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/">站点目录</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main" class="editorial-shell"><div class="news-wrap">
+  <div class="news-crumb">
+    <a href="/">首页</a> › <a href="/news">AI 新闻</a>
+  </div>
+
+  <div class="news-layout">
+    <div class="news-main">
+      <article class="news-article">
+        <h1>AI 中转站怎么对接 Dify、Cursor 等工具？</h1>
+        <div class="news-article-meta">2026-08-14</div>
+        <div class="news-body"><p style="text-align: start;">AI 中转站（如小豆包、MKEAI 等）主要通过模拟主流 AI 工具（如 Cursor、Dify）所支持的官方 API 协议（如 OpenAI 兼容协议）进行对接。核心逻辑是：将中转站的 API 地址和 Key 填入工具的自定义模型配置中，实现请求路由与协议转换。</p><p style="text-align: start;">以下是针对 Cursor 和 Dify 的具体对接方案与操作步骤：</p><p style="text-align: start;"><strong>一、Cursor 对接 AI 中转站（以小豆包等中转站为例）</strong></p><p style="text-align: start;">Cursor 支持通过“自定义模型”功能接入中转站，需模拟 OpenAI 的兼容协议。</p><p style="text-align: start;"><strong>1. 获取中转站 API 信息</strong></p><ul><li style="text-align: start;">注册中转站平台，获取 API Key（如 <span style="background-color: rgb(247, 247, 247);"><code>sk-xxx</code></span>）和 API 地址。</li></ul><p style="text-align: start;"><strong>2. 在 Cursor 中配置自定义模型</strong></p><ul><li style="text-align: start;">打开 Cursor，点击右上角“设置”（齿轮图标） -&gt; 进入“Models”页面 -&gt; 点击“Add model”。</li><li style="text-align: start;">配置关键参数：</li><li style="text-align: start;">保存并启用该模型。</li></ul><p style="text-align: start;"><strong>3. 验证对接</strong></p><ul><li style="text-align: start;">在 Cursor 的 Chat 面板（Ctrl+L）中输入测试问题，观察是否正常返回响应。</li></ul><p style="text-align: start;"><strong>二、Dify 对接 AI 中转站（以小豆包等中转站为例）</strong></p><p style="text-align: start;">Dify 支持通过“自定义模型”或“API 接入”的方式对接中转站，需通过 Dify 的“API 节点”或“模型配置”进行转发。</p><p style="text-align: start;"><strong>1. 获取中转站 API 信息</strong></p><ul><li style="text-align: start;">获取中转站的 API Key 和 API 地址（需确认中转站是否支持 OpenAI 兼容协议，或需使用中转站提供的特定 API 路径）。</li></ul><p style="text-align: start;"><strong>2. 在 Dify 中配置自定义模型（模型级别对接）</strong></p><ul><li style="text-align: start;">进入 Dify 的“模型配置”页面，添加“自定义模型”。</li><li style="text-align: start;">配置参数：填入中转站的 API 地址和 API Key，并选择对应的模型名称。</li></ul><p style="text-align: start;"><strong>3. 在 Dify 工作流中配置 API 节点（工作流级别对接）</strong></p><ul><li style="text-align: start;">在 Dify 的“画布”工作流中，添加“API 节点”或“HTTP 请求节点”。</li><li style="text-align: start;">配置请求信息：填入中转站的 API 地址、请求头（添加 <span style="background-color: rgb(247, 247, 247);"><code>Authorization: Bearer API_KEY</code></span>）和请求体（按中转站接口格式传递参数）。</li><li style="text-align: start;">将 API 节点与工作流中的其他节点连接，实现中转站 API 的调用。</li></ul><p style="text-align: start;"><strong>注意事项：</strong></p><ul><li style="text-align: start;"><strong>协议匹配</strong>：确保中转站支持的协议与工具要求的协议一致（如 OpenAI 兼容协议需对应 <span style="background-color: rgb(247, 247, 247);"><code>v1/chat/completions</code></span> 路径）。</li><li style="text-align: start;"><strong>参数匹配</strong>：自定义模型中的“模型名称”必须与中转站后台配置的模型名称完全一致，否则会报错。</li></ul></div>
+      </article>
+      <div class="news-back"><a href="/news">← 返回AI 新闻</a></div>
+    </div>
+
+    
+    <aside class="news-side">
+      <div class="news-side-card">
+        <div class="news-side-title">推荐文章</div>
+        
+        <a class="news-side-item" href="/news/ai-api-2">
+          <div class="t">ai api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-28">
+          <div class="t">什么是api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-27">
+          <div class="t">api中转站是什么</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-26">
+          <div class="t">使用 API 中转站会不会产生额外的数据泄露风险</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-25">
+          <div class="t">API 中转站支持哪些接口类型，对接难度大吗</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-24">
+          <div class="t">API 中转站是什么？主要可以解决哪些开发问题</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-token">
+          <div class="t">AI 中转站 token 计费是怎么计算的？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-11">
+          <div class="t">AI 中转站是否合规，有哪些使用注意事项？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+      </div>
+    </aside>
+    
+  </div>
+</div></main><footer class="footer"><p>API 中转站推荐 · 持续整理站点、检测与行业资料</p><a href="#main">返回顶部 ↑</a></footer></body></html>

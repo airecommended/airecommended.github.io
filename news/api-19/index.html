@@ -1,0 +1,65 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API中转站和反向代理有什么区别？新手别再混淆 | API 中转站推荐</title><meta name="description" content="API中转站（API Proxy）和反向代理（Reverse Proxy）都是位于客户端与服务端之间的“中间层”，用于转发请求，但两者的 核心定位、核心功能、适用场景 存在本质区别。新手容易混淆，主要是因为两者在“请求转发”的表象上相似，但"><link rel="canonical" href="https://airecommended.github.io/news/api-19/"><meta property="og:title" content="API中转站和反向代理有什么区别？新手别再混淆"><meta property="og:description" content="API中转站（API Proxy）和反向代理（Reverse Proxy）都是位于客户端与服务端之间的“中间层”，用于转发请求，但两者的 核心定位、核心功能、适用场景 存在本质区别。新手容易混淆，主要是因为两者在“请求转发”的表象上相似，但"><meta property="og:url" content="https://airecommended.github.io/news/api-19/"><meta property="og:image" content="https://airecommended.github.io/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"API中转站和反向代理有什么区别？新手别再混淆","name":"API中转站和反向代理有什么区别？新手别再混淆","description":"API中转站（API Proxy）和反向代理（Reverse Proxy）都是位于客户端与服务端之间的“中间层”，用于转发请求，但两者的 核心定位、核心功能、适用场景 存在本质区别。新手容易混淆，主要是因为两者在“请求转发”的表象上相似，但","url":"https://airecommended.github.io/news/api-19/","dateModified":"2026-09-15"}</script></head><body class="editorial-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/">站点目录</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main" class="editorial-shell"><div class="news-wrap">
+  <div class="news-crumb">
+    <a href="/">首页</a> › <a href="/news">AI 新闻</a>
+  </div>
+
+  <div class="news-layout">
+    <div class="news-main">
+      <article class="news-article">
+        <h1>API中转站和反向代理有什么区别？新手别再混淆</h1>
+        <div class="news-article-meta">2026-08-26</div>
+        <div class="news-body"><p style="text-align: start;">API中转站（API Proxy）和反向代理（Reverse Proxy）都是位于客户端与服务端之间的“中间层”，用于转发请求，但两者的<strong>核心定位、核心功能、适用场景</strong>存在本质区别。新手容易混淆，主要是因为两者在“请求转发”的表象上相似，但解决的问题和运作逻辑不同。</p><p style="text-align: start;"><strong>一、 核心定位与视角不同</strong></p><ul><li style="text-align: start;"><a href="#" target="_blank" rel="noopener"><strong>API中转站</strong></a><strong>（API Proxy）</strong>：是<strong>客户端的代理</strong>。它位于用户应用与<strong>第三方原始API</strong>之间，充当“中介”角色，主要解决客户端调用第三方API时遇到的接口不兼容、密钥管理复杂、网络不稳定、成本高等问题。</li><li style="text-align: start;"><strong>反向代理（Reverse Proxy）</strong>：是<strong>服务端的代理</strong>。它位于客户端与<strong>内部后端服务器</strong>之间，充当“统一的入口”角色，主要解决服务端面临的负载均衡、服务端隐藏、安全防护、性能优化等问题。</li></ul><p style="text-align: start;"><strong>二、 核心功能与作用不同</strong></p><ul><li style="text-align: start;"><strong>API中转站的核心功能</strong>：</li><li style="text-align: start;"><strong>反向代理的核心功能</strong>：</li></ul><p style="text-align: start;"><strong>三、 适用场景不同</strong></p><ul><li style="text-align: start;"><strong>API中转站适用场景</strong>：适用于<strong>客户端</strong>需要调用<strong>第三方API</strong>的场景。例如：开发者需要同时调用多个大模型（AI中转站）、需要对接海外API但面临网络限制、需要统一接口格式或优化调用成本时。</li><li style="text-align: start;"><strong>反向代理适用场景</strong>：适用于<strong>服务端</strong>构建<strong>中大型系统</strong>的场景。例如：构建高并发网站时进行流量分发、微服务架构中的API网关、需要隐藏内部服务细节或进行安全防护时。</li></ul><p style="text-align: start;"><strong>总结对比表：</strong></p><p style="text-align: start;"><br></p><table style="width: auto;"><tbody><tr><th width="auto" style="text-align: left;">对比维度</th><th width="auto" style="text-align: left;">API中转站 (API Proxy)</th><th width="auto" style="text-align: left;">反向代理 (Reverse Proxy)</th></tr><tr><td width="auto"><strong>代理视角</strong></td><td width="auto">客户端代理（代理第三方API）</td><td width="auto">服务端代理（代理内部服务器）</td></tr><tr><td width="auto"><strong>核心目的</strong></td><td width="auto">解决客户端调用第三方API的兼容、成本、网络问题</td><td width="auto">解决服务端的高并发、安全、负载均衡问题</td></tr><tr><td width="auto"><strong>核心功能</strong></td><td width="auto">接口聚合、格式转换、密钥管理、成本分摊</td><td width="auto">负载均衡、隐藏服务端、缓存加速、SSL终端</td></tr><tr><td width="auto"><strong>典型场景</strong></td><td width="auto">多模型统一调用、API接口兼容、网络加速</td><td width="auto">网站负载均衡、微服务网关、安全防护</td></tr></tbody></table><p><br></p></div>
+      </article>
+      <div class="news-back"><a href="/news">← 返回AI 新闻</a></div>
+    </div>
+
+    
+    <aside class="news-side">
+      <div class="news-side-card">
+        <div class="news-side-title">推荐文章</div>
+        
+        <a class="news-side-item" href="/news/ai-api-2">
+          <div class="t">ai api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-28">
+          <div class="t">什么是api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-27">
+          <div class="t">api中转站是什么</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-26">
+          <div class="t">使用 API 中转站会不会产生额外的数据泄露风险</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-25">
+          <div class="t">API 中转站支持哪些接口类型，对接难度大吗</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-24">
+          <div class="t">API 中转站是什么？主要可以解决哪些开发问题</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-dify-cursor">
+          <div class="t">AI 中转站怎么对接 Dify、Cursor 等工具？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-token">
+          <div class="t">AI 中转站 token 计费是怎么计算的？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+      </div>
+    </aside>
+    
+  </div>
+</div></main><footer class="footer"><p>API 中转站推荐 · 持续整理站点、检测与行业资料</p><a href="#main">返回顶部 ↑</a></footer></body></html>

@@ -1,0 +1,65 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 中转站 token 计费是怎么计算的？ | API 中转站推荐</title><meta name="description" content="AI中转站的Token计费并非单一的固定公式，而是结合了底层大模型的计费逻辑与中转站自身的计费规则，通常采用“按量计费”或“套餐计费”模式。具体计费逻辑如下： 一、 底层计费逻辑（中转站计费的基准） 中转站计费的底层依据是底层大模型（如GP"><link rel="canonical" href="https://airecommended.github.io/news/ai-token/"><meta property="og:title" content="AI 中转站 token 计费是怎么计算的？"><meta property="og:description" content="AI中转站的Token计费并非单一的固定公式，而是结合了底层大模型的计费逻辑与中转站自身的计费规则，通常采用“按量计费”或“套餐计费”模式。具体计费逻辑如下： 一、 底层计费逻辑（中转站计费的基准） 中转站计费的底层依据是底层大模型（如GP"><meta property="og:url" content="https://airecommended.github.io/news/ai-token/"><meta property="og:image" content="https://airecommended.github.io/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI 中转站 token 计费是怎么计算的？","name":"AI 中转站 token 计费是怎么计算的？","description":"AI中转站的Token计费并非单一的固定公式，而是结合了底层大模型的计费逻辑与中转站自身的计费规则，通常采用“按量计费”或“套餐计费”模式。具体计费逻辑如下： 一、 底层计费逻辑（中转站计费的基准） 中转站计费的底层依据是底层大模型（如GP","url":"https://airecommended.github.io/news/ai-token/","dateModified":"2026-09-15"}</script></head><body class="editorial-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/">站点目录</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main" class="editorial-shell"><div class="news-wrap">
+  <div class="news-crumb">
+    <a href="/">首页</a> › <a href="/news">AI 新闻</a>
+  </div>
+
+  <div class="news-layout">
+    <div class="news-main">
+      <article class="news-article">
+        <h1>AI 中转站 token 计费是怎么计算的？</h1>
+        <div class="news-article-meta">2026-08-15</div>
+        <div class="news-body"><p style="text-align: start;">AI中转站的Token计费并非单一的固定公式，而是结合了底层大模型的计费逻辑与中转站自身的计费规则，通常采用“按量计费”或“套餐计费”模式。具体计费逻辑如下：</p><p style="text-align: start;"><strong>一、 底层计费逻辑（中转站计费的基准）</strong><br>中转站计费的底层依据是底层大模型（如GPT、Claude、DeepSeek等）的计费标准，主要按Token（词元）的消耗量进行计费，通常分为以下三部分：</p><ol><li style="text-align: start;"><strong>输入Token计费</strong>：用户向模型发送的提示词（Prompt）和上下文（历史对话）所消耗的Token，按输入单价计费。输入单价通常较低。</li><li style="text-align: start;"><strong>输出Token计费</strong>：模型生成回复（Completion）所消耗的Token，按输出单价计费。输出单价通常高于输入单价（因生成回复更耗算力）。</li><li style="text-align: start;"><strong>缓存Token计费（部分模型/场景）</strong>：命中历史上下文的缓存读取（Cache Read）Token，计费单价通常远低于输入/输出Token（部分平台按极低单价或免费计）。<br><em>注：部分推理模型（如DeepSeek-R1）的“思考Token”也会单独计费，计入输出Token或单独计费。</em></li></ol><p style="text-align: start;"><strong>二、 中转站计费规则（中转站加价与折算逻辑）</strong><br>中转站会在底层计费的基础上，叠加自身的计费规则，形成用户实际支付的费用，常见计费模式包括：</p><ol><li style="text-align: start;"><strong>按量计费（Pay-as-you-go）</strong>：最普遍的计费方式，按实际消耗的Token量乘以中转站设定的“单价”或“倍率”计费。例如：0.5元/千Token，或按“积分/点数”折算（如1元兑换1000积分，消耗1积分/Token）。</li><li style="text-align: start;"><strong>倍率计费（系数计费）</strong>：中转站常通过“倍率”来折算费用，计费公式为：<strong>实际费用 = (输入Token + 输出Token × 补全倍率) × 单价 / 1000</strong>。其中，补全倍率（输出/输入单价比）和模型倍率（中转站设定的系数）由中转站后台控制，不同模型、不同倍率档位价格不同，部分平台通过调整倍率暗中加价。</li><li style="text-align: start;"><strong>套餐/包月计费</strong>：部分中转站提供“包月不限量”或“固定额度”套餐，按固定月费收取，但通常设有严格的调用频次或额度上限，超出部分可能按量额外扣费。</li><li style="text-align: start;"><strong>积分/余额折算计费</strong>：部分平台采用“积分/余额”体系，用户需先充值购买积分，调用时按设定的积分消耗比例扣减，实际成本取决于积分的购买单价。</li></ol><p style="text-align: start;"><strong>三、 计费差异与风险提示</strong></p><ol><li style="text-align: start;"><strong>价格差异</strong>：中转站计费通常远低于官方直连价格（因中转站批量采购或拆分账号池），但部分不正规平台会通过“虚高倍率”、“模糊计费”或“偷跑Token”变相加价。</li><li style="text-align: start;"><strong>计费不透明</strong>：中转站计费系统多为后台黑盒，用户难以验证实际消耗的Token量与底层模型是否完全一致，且部分平台存在“模型掉包”（实际调用低配模型）导致的计费与价值不符问题。</li></ol></div>
+      </article>
+      <div class="news-back"><a href="/news">← 返回AI 新闻</a></div>
+    </div>
+
+    
+    <aside class="news-side">
+      <div class="news-side-card">
+        <div class="news-side-title">推荐文章</div>
+        
+        <a class="news-side-item" href="/news/ai-api-2">
+          <div class="t">ai api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-28">
+          <div class="t">什么是api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-27">
+          <div class="t">api中转站是什么</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-26">
+          <div class="t">使用 API 中转站会不会产生额外的数据泄露风险</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-25">
+          <div class="t">API 中转站支持哪些接口类型，对接难度大吗</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-24">
+          <div class="t">API 中转站是什么？主要可以解决哪些开发问题</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-dify-cursor">
+          <div class="t">AI 中转站怎么对接 Dify、Cursor 等工具？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-11">
+          <div class="t">AI 中转站是否合规，有哪些使用注意事项？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+      </div>
+    </aside>
+    
+  </div>
+</div></main><footer class="footer"><p>API 中转站推荐 · 持续整理站点、检测与行业资料</p><a href="#main">返回顶部 ↑</a></footer></body></html>

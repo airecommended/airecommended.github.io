@@ -1,0 +1,171 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>选站避雷：AI API 中转站五大坑 + 买前检查表 | API 中转站推荐</title><meta name="description" content="AI API 中转站怎么选、怎么避坑、买前要看什么？用 Claude Code、Codex 这类 agent 工具，同样的模型、同样的活，不同中转站的价格可能相差好几倍，买之前还看不出来。系统列出五大常见坑：缓存不生效导致每轮按原价重算、缓存命中率低反复重写缓存比不缓存还贵、模型被掉包成便宜模型或版本降级、实际扣费对不上站方标价、站家卷款跑路。附买前检查清单 + 缓存与扣费实测 + 1 分钟真假自测方法 + 充值额度建议。独立第三方视角，不接付费排名。"><link rel="canonical" href="https://airecommended.github.io/pitfalls/"><meta property="og:title" content="选站避雷：AI API 中转站五大坑 + 买前检查表"><meta property="og:description" content="AI API 中转站怎么选、怎么避坑、买前要看什么？用 Claude Code、Codex 这类 agent 工具，同样的模型、同样的活，不同中转站的价格可能相差好几倍，买之前还看不出来。系统列出五大常见坑：缓存不生效导致每轮按原价重算、缓存命中率低反复重写缓存比不缓存还贵、模型被掉包成便宜模型或版本降级、实际扣费对不上站方标价、站家卷款跑路。附买前检查清单 + 缓存与扣费实测 + 1 分钟真假自测方法 + 充值额度建议。独立第三方视角，不接付费排名。"><meta property="og:url" content="https://airecommended.github.io/pitfalls/"><meta property="og:image" content="https://airecommended.github.io/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","headline":"选站避雷：AI API 中转站五大坑 + 买前检查表","name":"选站避雷：AI API 中转站五大坑 + 买前检查表","description":"AI API 中转站怎么选、怎么避坑、买前要看什么？用 Claude Code、Codex 这类 agent 工具，同样的模型、同样的活，不同中转站的价格可能相差好几倍，买之前还看不出来。系统列出五大常见坑：缓存不生效导致每轮按原价重算、缓存命中率低反复重写缓存比不缓存还贵、模型被掉包成便宜模型或版本降级、实际扣费对不上站方标价、站家卷款跑路。附买前检查清单 + 缓存与扣费实测 + 1 分钟真假自测方法 + 充值额度建议。独立第三方视角，不接付费排名。","url":"https://airecommended.github.io/pitfalls/","dateModified":"2026-09-15"}</script></head><body class="editorial-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/">站点目录</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main" class="editorial-shell"><div class="cnt-narrow cms-content"><!-- Hero -->
+<div style="padding:34px 0 24px; text-align:center; border-bottom:1px solid var(--border);">
+  <h1 style="font-family:var(--mono); font-size:34px; font-weight:800; line-height:1.25; margin:0 0 12px; letter-spacing:.02em;">
+    挑中转站前，先躲开 <em style="font-style:normal; background:linear-gradient(90deg,#ff6b35,#e53935); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">5 个坑</em>
+  </h1>
+  <p style="font-size:16px; line-height:1.7; color:var(--text-1); margin:0;">
+    用同样的模型、干同样的活，价格可能相差 <strong style="color:#ff6b35; white-space:nowrap;">7 倍</strong>！
+  </p>
+</div>
+
+<!-- 五个坑 -->
+<div style="display:grid; grid-template-columns:1fr; gap:14px; margin:28px 0;">
+
+  <!-- 坑 1：缓存不生效 -->
+  <div style="border-left:4px solid #ff6b35; background:var(--bg-card); border-radius:6px; padding:20px 24px;">
+    <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+      <span style="font-family:var(--mono); font-size:38px; font-weight:800; color:#ff6b35; line-height:1;">01</span>
+      <h2 style="margin:0; font-size:20px; font-weight:700;">缓存不生效<span style="font-size:11px; color:#ff6b35; margin-left:8px; padding:2px 8px; background:rgba(255,107,53,.14); border-radius:3px;">最花钱</span></h2>
+    </div>
+    <p style="font-size:14px; line-height:1.75; color:var(--text-1); margin:0 0 14px;">
+      用 Claude Code、Codex 这类 agent 工具连续干活，你每问一句，它都要把前面聊过的<strong>全部内容重新发一遍</strong>。这部分是重复的，正常情况下按「缓存」计价，<strong style="color:#ff6b35;">只收约 1 折</strong>。有的站这套压根没启用——每一轮都按原价重算。
+    </p>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:8px 0 14px;">
+      <div style="text-align:center; padding:16px 8px; background:rgba(255,107,53,.07); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:30px; font-weight:800; color:#ff6b35; line-height:1;">1 折</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:5px;">缓存正常时<br>重复内容的价钱</div>
+      </div>
+      <div style="text-align:center; padding:16px 8px; background:rgba(255,107,53,.07); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:30px; font-weight:800; color:#ff6b35; line-height:1;">3 倍</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:5px;">不生效时<br>同一段活的账单</div>
+      </div>
+    </div>
+    <div style="padding:10px 14px; background:var(--bg-hover); border-radius:5px; font-size:13px; color:var(--text-2);">
+      <strong style="color:var(--text-1);">本站 怎么帮你 →</strong> 我们买各站的 key 连着跑多轮，逐轮看缓存到底有没有读回来 → <a href="#" style="color:var(--blue); font-weight:600;">中转站费用实测 →</a>
+    </div>
+  </div>
+
+  <!-- 坑 2：缓存命中率低 -->
+  <div style="border-left:4px solid #d9480f; background:var(--bg-card); border-radius:6px; padding:20px 24px;">
+    <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+      <span style="font-family:var(--mono); font-size:38px; font-weight:800; color:#d9480f; line-height:1;">02</span>
+      <h2 style="margin:0; font-size:20px; font-weight:700;">缓存命中率低<span style="font-size:11px; color:#fff; margin-left:8px; padding:2px 8px; background:#d9480f; border-radius:3px;">比不生效还贵</span></h2>
+    </div>
+    <p style="font-size:14px; line-height:1.75; color:var(--text-1); margin:0 0 14px;">
+      更常见的不是「一点缓存都没有」，而是<strong>缓存写了、下一轮却读不回来</strong>。而<strong style="color:#d9480f;">写缓存本身是要加钱的（约 1.25 倍原价）</strong>——写了读不回，等于每一轮都花高价建一个用不上的缓存，然后再按原价把内容重发一遍。<strong>两头都在花钱，比压根不缓存还贵。</strong>
+    </p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:8px 0 14px;">
+      <div style="text-align:center; padding:16px 8px; background:rgba(217,72,15,.08); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:30px; font-weight:800; color:#d9480f; line-height:1;">7 倍</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:5px;">我们实测到最贵的<br>一例，同一段活</div>
+      </div>
+      <div style="text-align:center; padding:16px 8px; background:rgba(217,72,15,.08); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:30px; font-weight:800; color:#d9480f; line-height:1;">14%</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:5px;">那一例真正<br>读回来的比例</div>
+      </div>
+      <div style="text-align:center; padding:16px 8px; background:rgba(217,72,15,.08); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:30px; font-weight:800; color:#d9480f; line-height:1;">近一半</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:5px;">那笔账单里，花在<br>白建缓存上的钱</div>
+      </div>
+    </div>
+    <div style="padding:12px 16px; margin:0 0 12px; background:rgba(217,72,15,.08); border-left:2px solid #d9480f; border-radius:4px; font-size:13px; line-height:1.75; color:var(--text-1);">
+      <strong>这个坑你自己发现不了。</strong>命中率是时高时低的，站方页面不写、控制台也不显示。你看到余额掉得快，只会觉得「这个月写得多」——不会想到是同样的活，别人花的是你的七分之一。
+    </div>
+    <div style="padding:10px 14px; background:var(--bg-hover); border-radius:5px; font-size:13px; color:var(--text-2);">
+      <strong style="color:var(--text-1);">本站 怎么帮你 →</strong> 我们把每一轮读回了多少、重写了多少都摊开，账单差在哪一笔一眼能看到 → <a href="#" style="color:var(--blue); font-weight:600;">中转站费用实测 →</a>
+    </div>
+  </div>
+
+  <!-- 坑 3：模型掉包 -->
+  <div style="border-left:4px solid #e53935; background:var(--bg-card); border-radius:6px; padding:20px 24px;">
+    <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+      <span style="font-family:var(--mono); font-size:38px; font-weight:800; color:#e53935; line-height:1;">03</span>
+      <h2 style="margin:0; font-size:20px; font-weight:700;">模型掉包 / 降级</h2>
+    </div>
+    <p style="font-size:14px; line-height:1.7; color:var(--text-1); margin:0 0 14px;">
+      表面卖 Claude，后端偷偷换便宜模型顶包。<strong style="color:#e53935;">便宜又说不清楚通道来源（订阅切片/区域折扣/IDE 配额等），掉包概率越高。</strong>
+    </p>
+    <div style="display:flex; align-items:center; gap:8px; margin:8px 0 10px; font-size:12px; color:var(--text-3);">
+      <span style="padding:2px 8px; background:rgba(229,57,53,.1); color:#e53935; border-radius:3px; font-weight:600; letter-spacing:.02em;">CISPA 2026 报告</span>
+      <span>独立研究实测 · <a href="#" target="_blank" rel="noopener nofollow" style="color:var(--text-3);">arXiv:2603.01919 ↗</a></span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:8px 0 14px;">
+      <div style="text-align:center; padding:14px 8px; background:rgba(229,57,53,.06); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:28px; font-weight:800; color:#e53935; line-height:1;">45.83%</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:4px;">中转端点未通过身份核验</div>
+      </div>
+      <div style="text-align:center; padding:14px 8px; background:rgba(229,57,53,.06); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:28px; font-weight:800; color:#e53935; line-height:1;">83→37</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:4px;">同题准确率掉幅 (%)</div>
+      </div>
+      <div style="text-align:center; padding:14px 8px; background:rgba(229,57,53,.06); border-radius:6px;">
+        <div style="font-family:var(--mono); font-size:28px; font-weight:800; color:#e53935; line-height:1;">$5.70</div>
+        <div style="font-size:11px; color:var(--text-2); margin-top:4px;">付 $14.84 实得 token 价值</div>
+      </div>
+    </div>
+    <details style="margin:0 0 12px; font-size:12px; color:var(--text-2);">
+      <summary style="cursor:pointer; color:var(--text-2); padding:4px 0;">报告里几个典型案例 →</summary>
+      <div style="padding:10px 14px; margin-top:6px; background:rgba(229,57,53,.06); border-left:2px solid #e53935; border-radius:4px; line-height:1.75;">
+        用户点 GPT-5 实际给 glm-4-9b-chat、GPT-4o-mini 给 Qwen2.5-7B、DeepSeek-Reasoner 思考版给非思考版。
+      </div>
+    </details>
+    <div style="padding:10px 14px; background:var(--bg-hover); border-radius:5px; font-size:13px; color:var(--text-2);">
+      <strong style="color:var(--text-1);">本站 怎么帮你 →</strong> 榜单「Claude 真假检测」列就是探针实测，优先选「通过检测」；买之前也可以自己跑一次 <a href="#" style="color:var(--blue);">一键自测</a>
+    </div>
+  </div>
+
+  <!-- 坑 4：扣费对不上标价 -->
+  <div style="border-left:4px solid #f5a623; background:var(--bg-card); border-radius:6px; padding:20px 24px;">
+    <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+      <span style="font-family:var(--mono); font-size:38px; font-weight:800; color:#f5a623; line-height:1;">04</span>
+      <h2 style="margin:0; font-size:20px; font-weight:700;">扣费对不上标价</h2>
+    </div>
+    <p style="font-size:14px; line-height:1.7; color:var(--text-1); margin:0 0 14px;">
+      站方页面标一个价，实际从余额里扣的是另一个数。<strong style="color:#f5a623;">大部分人只看余额少了多少，不会回去核对该扣多少</strong>——这笔差价就一直在流。
+    </p>
+    <div style="padding:12px 16px; margin:0 0 12px; background:rgba(245,166,35,.08); border-left:2px solid #f5a623; border-radius:4px; font-size:13px; line-height:1.75; color:var(--text-1);">
+      我们按站方自己公示的价格，把每一次调用该扣多少算出来，再跟它面板里的扣费记录逐条对。<strong style="color:#f5a623;">实测到过实际扣的是按它自己标价该扣的 5 倍。</strong>
+    </div>
+    <div style="padding:10px 14px; background:var(--bg-hover); border-radius:5px; font-size:13px; color:var(--text-2);">
+      <strong style="color:var(--text-1);">本站 怎么帮你 →</strong> 实测页每一行都写明这家扣得对不对、差多少 → <a href="#" style="color:var(--blue); font-weight:600;">中转站费用实测 →</a>
+    </div>
+  </div>
+
+  <!-- 坑 5：跑路 -->
+  <div style="border-left:4px solid #4f8ef7; background:var(--bg-card); border-radius:6px; padding:20px 24px;">
+    <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+      <span style="font-family:var(--mono); font-size:38px; font-weight:800; color:#4f8ef7; line-height:1;">05</span>
+      <h2 style="margin:0; font-size:20px; font-weight:700;">跑路风险</h2>
+    </div>
+    <p style="font-size:14px; line-height:1.7; color:var(--text-1); margin:0 0 14px;">
+      站长拿着用户充值余额突然消失，<strong>常在 24 小时内突发</strong>。
+    </p>
+    <div style="padding:10px 14px; background:var(--bg-hover); border-radius:5px; font-size:13px; color:var(--text-2);">
+      <strong style="color:var(--text-1);">怎么避 →</strong> 没人能预测谁会跑路，唯一可控的是 <strong style="color:#4f8ef7;">别在单一站点充太多钱，宁可多充几次小额</strong>。
+    </div>
+  </div>
+
+</div>
+
+<!-- 买前检查清单 -->
+<div style="margin:36px 0 24px;">
+  <div style="text-align:center; margin-bottom:18px;">
+    <div style="font-family:var(--mono); font-size:11px; color:var(--text-3); letter-spacing:.2em; margin-bottom:8px;">B U Y   C H E C K L I S T</div>
+    <h2 style="margin:0; font-size:22px; font-weight:700;">下单前，过一遍这 4 项</h2>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px;">
+    <div style="text-align:center; padding:18px 10px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+      <div style="font-family:var(--mono); font-size:22px; font-weight:800; color:#ff6b35;">01</div>
+      <div style="font-size:12px; line-height:1.5; margin-top:6px; color:var(--text-1);">缓存实测生效、命中率高</div>
+    </div>
+    <div style="text-align:center; padding:18px 10px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+      <div style="font-family:var(--mono); font-size:22px; font-weight:800; color:var(--blue);">02</div>
+      <div style="font-size:12px; line-height:1.5; margin-top:6px; color:var(--text-1);">Claude 真假「通过检测」</div>
+    </div>
+    <div style="text-align:center; padding:18px 10px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+      <div style="font-family:var(--mono); font-size:22px; font-weight:800; color:var(--blue);">03</div>
+      <div style="font-size:12px; line-height:1.5; margin-top:6px; color:var(--text-1);">扣费对得上标价</div>
+    </div>
+    <div style="text-align:center; padding:18px 10px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px;">
+      <div style="font-family:var(--mono); font-size:22px; font-weight:800; color:var(--blue);">04</div>
+      <div style="font-size:12px; line-height:1.5; margin-top:6px; color:var(--text-1);">支持你要的模型</div>
+    </div>
+  </div>
+</div>
+
+<!-- 大 CTA -->
+<div style="text-align:center; margin:32px 0 20px;">
+  <a href="/" style="display:inline-block; padding:14px 36px; background:linear-gradient(135deg,#4f8ef7,#6366f1); color:#fff; font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.08em; text-decoration:none; border-radius:6px; box-shadow:0 4px 16px rgba(79,142,247,.35);">按这 4 项 · 回排行榜挑一家 →</a>
+</div>
+</div></main><footer class="footer"><p>API 中转站推荐 · 持续整理站点、检测与行业资料</p><a href="#main">返回顶部 ↑</a></footer></body></html>

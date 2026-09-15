@@ -1,0 +1,65 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API中转站常见问题汇总：超时、转发失败怎么排查 | API 中转站推荐</title><meta name="description" content="API中转站 （API网关）常见的“超时”与“转发失败”问题，通常由网络、配置、服务状态或网关中间件本身引起。排查时建议遵循“由外到内、由网络到代码”的递进逻辑，具体排查路径如下： 一、 转发失败（如 404、502）排查 1. 路由配置不"><link rel="canonical" href="https://airecommended.github.io/news/api-18/"><meta property="og:title" content="API中转站常见问题汇总：超时、转发失败怎么排查"><meta property="og:description" content="API中转站 （API网关）常见的“超时”与“转发失败”问题，通常由网络、配置、服务状态或网关中间件本身引起。排查时建议遵循“由外到内、由网络到代码”的递进逻辑，具体排查路径如下： 一、 转发失败（如 404、502）排查 1. 路由配置不"><meta property="og:url" content="https://airecommended.github.io/news/api-18/"><meta property="og:image" content="https://airecommended.github.io/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"API中转站常见问题汇总：超时、转发失败怎么排查","name":"API中转站常见问题汇总：超时、转发失败怎么排查","description":"API中转站 （API网关）常见的“超时”与“转发失败”问题，通常由网络、配置、服务状态或网关中间件本身引起。排查时建议遵循“由外到内、由网络到代码”的递进逻辑，具体排查路径如下： 一、 转发失败（如 404、502）排查 1. 路由配置不","url":"https://airecommended.github.io/news/api-18/","dateModified":"2026-09-15"}</script></head><body class="editorial-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/">站点目录</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main" class="editorial-shell"><div class="news-wrap">
+  <div class="news-crumb">
+    <a href="/">首页</a> › <a href="/news">AI 新闻</a>
+  </div>
+
+  <div class="news-layout">
+    <div class="news-main">
+      <article class="news-article">
+        <h1>API中转站常见问题汇总：超时、转发失败怎么排查</h1>
+        <div class="news-article-meta">2026-08-25</div>
+        <div class="news-body"><p style="text-align: start;"><a href="#" target="_blank" rel="noopener">API中转站</a>（API网关）常见的“超时”与“转发失败”问题，通常由网络、配置、服务状态或网关中间件本身引起。排查时建议遵循“由外到内、由网络到代码”的递进逻辑，具体排查路径如下：</p><p style="text-align: start;"><strong>一、 转发失败（如 404、502）排查</strong></p><p style="text-align: start;"><strong>1. 路由配置不匹配（常见 404）</strong></p><ul><li style="text-align: start;"><strong>排查点</strong>：检查网关（如 Ocelot）的 <span style="background-color: rgb(247, 247, 247);"><code>UpstreamPathTemplate</code></span> 与客户端实际请求路径是否完全匹配（注意大小写、前导斜杠、版本前缀是否遗漏）。</li><li style="text-align: start;"><strong>排查点</strong>：检查 <span style="background-color: rgb(247, 247, 247);"><code>DownstreamPathTemplate</code></span> 与下游服务（微服务）的实际接口路径是否完全一致（包括前导斜杠和路由特性）。</li><li style="text-align: start;"><strong>排查点</strong>：检查是否存在路由冲突（如多个路由配置了相同的上游路径，仅第一个生效，后续被忽略）。</li></ul><p style="text-align: start;"><strong>2. 下游服务不可达（常见 502）</strong></p><ul><li style="text-align: start;"><strong>排查点</strong>：检查 <span style="background-color: rgb(247, 247, 247);"><code>DownstreamHost</code></span> 和 <span style="background-color: rgb(247, 247, 247);"><code>DownstreamPort</code></span> 配置是否正确（注意：Docker 容器部署时，Host 应使用容器内服务名而非 <span style="background-color: rgb(247, 247, 247);"><code>localhost</code></span>；IIS 托管时注意子应用路径影响）。</li><li style="text-align: start;"><strong>排查点</strong>：检查下游服务是否正常运行、是否监听了正确的 IP（如是否只监听了 <span style="background-color: rgb(247, 247, 247);"><code>127.0.0.1</code></span> 导致外部无法访问）和端口。</li><li style="text-align: start;"><strong>排查点</strong>：检查网络连通性，通过 <span style="background-color: rgb(247, 247, 247);"><code>telnet host port</code></span> 或 <span style="background-color: rgb(247, 247, 247);"><code>curl</code></span> 直接访问下游服务，确认是否存在防火墙拦截或 DNS 解析失败。</li></ul><p style="text-align: start;"><strong>3. 协议或证书问题（常见 502）</strong></p><ul><li style="text-align: start;"><strong>排查点</strong>：检查 <span style="background-color: rgb(247, 247, 247);"><code>DownstreamScheme</code></span> 配置（HTTP/HTTPS）是否与下游服务实际协议一致。若为 HTTPS，需确认下游服务的证书信任链是否完整。</li></ul><p style="text-align: start;"><strong>二、 超时（如 504）排查</strong></p><p style="text-align: start;"><strong>1. 下游服务响应慢或阻塞</strong></p><ul><li style="text-align: start;"><strong>排查点</strong>：直接通过 <span style="background-color: rgb(247, 247, 247);"><code>curl</code></span> 或 Postman 测试下游服务接口的响应时间，确认是否因下游服务负载过高、代码逻辑阻塞或数据库慢查询导致响应超时。</li><li style="text-align: start;"><strong>排查点</strong>：检查下游服务是否触发了网关的限流（RateLimit）或熔断机制，导致请求被提前拦截。</li></ul><p style="text-align: start;"><strong>2. 网络延迟或网关配置超时</strong></p><ul><li style="text-align: start;"><strong>排查点</strong>：检查网关的超时（Timeout）或 QoS 配置是否设置过短，无法适应下游服务的实际响应时间，需根据实际网络情况调整配置。</li></ul><p style="text-align: start;"><strong>三、 通用排查与定位方法</strong></p><p style="text-align: start;"><strong>1. 查看网关日志</strong></p><ul><li style="text-align: start;">开启网关的详细日志（如 Ocelot 的日志输出），查看日志中记录的“原始请求路径”、“匹配的路由名称”、“构造的下游请求 URL”以及“HTTP 调用结果状态码”，这是定位转发失败原因最直接的依据。</li></ul><p style="text-align: start;"><strong>2. 分段测试与抓包</strong></p><ul><li style="text-align: start;"><strong>分段测试</strong>：先直接访问下游服务验证其可用性，再访问网关，通过对比结果缩小问题范围。</li><li style="text-align: start;"><strong>抓包分析</strong>：使用 Fiddler 或 Wireshark 抓包，分析请求在网关与下游服务之间的实际流向，排查网络层异常。</li></ul><p style="text-align: start;"><strong>3. 服务发现与负载均衡排查（适用于微服务架构）</strong></p><ul><li style="text-align: start;">若网关集成了 Consul、Eureka 等服务发现，需检查服务健康检查是否失败导致实例被剔除，或检查负载均衡策略是否将请求转发到了不可用的节点。</li></ul></div>
+      </article>
+      <div class="news-back"><a href="/news">← 返回AI 新闻</a></div>
+    </div>
+
+    
+    <aside class="news-side">
+      <div class="news-side-card">
+        <div class="news-side-title">推荐文章</div>
+        
+        <a class="news-side-item" href="/news/ai-api-2">
+          <div class="t">ai api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-28">
+          <div class="t">什么是api中转站</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-27">
+          <div class="t">api中转站是什么</div>
+          <div class="d">2026-09-11</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-26">
+          <div class="t">使用 API 中转站会不会产生额外的数据泄露风险</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-25">
+          <div class="t">API 中转站支持哪些接口类型，对接难度大吗</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/api-24">
+          <div class="t">API 中转站是什么？主要可以解决哪些开发问题</div>
+          <div class="d">2026-09-06</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-dify-cursor">
+          <div class="t">AI 中转站怎么对接 Dify、Cursor 等工具？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+        <a class="news-side-item" href="/news/ai-token">
+          <div class="t">AI 中转站 token 计费是怎么计算的？</div>
+          <div class="d">2026-09-02</div>
+        </a>
+        
+      </div>
+    </aside>
+    
+  </div>
+</div></main><footer class="footer"><p>API 中转站推荐 · 持续整理站点、检测与行业资料</p><a href="#main">返回顶部 ↑</a></footer></body></html>

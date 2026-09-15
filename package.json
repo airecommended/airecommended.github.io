@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.mjs",
-    "sync": "node scripts/build.mjs --sync",
+    "build": "node scripts/build.mjs && node scripts/editorial-pages.mjs",
+    "sync": "node scripts/build.mjs --sync && node scripts/editorial-pages.mjs --sync",
     "test": "node --test",
     "sync:db": "node scripts/export-database.mjs && node scripts/build.mjs",
     "sync:all": "node scripts/export-database.mjs && node scripts/build.mjs --sync"

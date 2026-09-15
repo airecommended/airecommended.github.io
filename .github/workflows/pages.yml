@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html 404.html robots.txt sitemap.xml .nojekyll _site/
-          cp -R assets page *-zhongzhuanzhan _site/
+          cp -R assets page *-zhongzhuanzhan guides pitfalls about news _site/
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v5

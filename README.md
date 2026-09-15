@@ -18,5 +18,4 @@ python3 -m http.server 4173
 
 ## 部署与持续更新
 
-GitHub Actions 在推送 main、手动触发、每天 UTC 02:17 时重新拉取最新公开榜单、构建、测试并部署。检测卡片的“最近检测”显示构建当天日期，每日任务会自动刷新。Pages Source 设为 GitHub Actions。数据只嵌入生成的 HTML 页面；JSON 文件仅作为构建中间快照，不参与页面访问。
-
+GitHub Actions 在推送 main、手动触发、每天 UTC 02:17 时重新拉取最新公开榜单、构建、测试并部署。Pages API 临时返回 500 时，部署步骤会自动重试三次。检测卡片的“最近检测”显示构建当天日期，每日任务会自动刷新。Pages Source 设为 GitHub Actions。数据只嵌入生成的 HTML 页面；JSON 文件仅作为构建中间快照，不参与页面访问。

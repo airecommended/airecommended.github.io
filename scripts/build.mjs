@@ -295,8 +295,8 @@ function topicMatches(site, topic) {
 function renderPage({ page, totalPages, sites, allSites, updatedDate, topic = null }) {
   const pathForPage = topic ? n => `/${topic.slug}/${n === 1 ? '' : `page/${n}/`}` : pagePath;
   const canonical = `${ORIGIN}${pathForPage(page)}`;
-  const title = `${topic ? topic.label : "最宇宙全API中转站导航"}：${number.format(allSites.length)} 家站点目录${page > 1 ? ` · 第 ${page} 页` : ''}`;
-  const description = `${topic ? "AI API" : "最宇宙全API"} 中转站导航，收录 ${allSites.length} 家站点，每页展示 1000 家，提供检测成功率、检测次数和站点特色。`;
+  const title = `${topic ? topic.label : "全宇宙全最API中转站推荐"}：${number.format(allSites.length)} 家站点目录${page > 1 ? ` · 第 ${page} 页` : ''}`;
+  const description = `${topic ? "AI API" : "全宇宙全API"} 中转站推荐，收录 ${allSites.length} 家站点，每页展示 1000 家，提供检测成功率、检测次数和站点特色。`;
   const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: canonical, dateModified: updatedDate,
     mainEntity: { '@type': 'ItemList', numberOfItems: sites.length, itemListElement: sites.map(site => ({ '@type': 'ListItem', position: site.rank, name: site.name, url: site.url })) } }).replaceAll('<', '\\u003c');
   const hero = topic

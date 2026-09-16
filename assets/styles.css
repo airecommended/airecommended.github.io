@@ -572,6 +572,11 @@ main { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; padding: 20px 
 .directory-hero { display: flex; justify-content: space-between; align-items: center; gap: 32px; padding: 46px 0 36px; }
 .directory-hero h1 { font-size: clamp(32px, 4vw, 52px); line-height: 1.2; letter-spacing: -1px; margin: 12px 0 20px; }
 .directory-hero h1 span { display: block; color: var(--cyan); }
+.directory-hero--home h1 { max-width: 880px; }
+.directory-hero--home h1 span { margin-top: 6px; font-size: .62em; letter-spacing: -.03em; }
+.directory-hero--home h1 span strong { color: var(--cyan); font: inherit; }
+.directory-hero__tagline { margin: 0 0 10px; color: var(--text) !important; font: 700 18px/1.4 var(--mono); letter-spacing: .04em; }
+.directory-hero__tagline i { padding: 0 8px; color: var(--blue); font-style: normal; }
 .directory-hero p { color: #aab8cf; }
 .directory-hero aside { flex-shrink: 0; text-align: right; }
 .directory-hero aside strong { display: block; font: 64px/1.2 var(--mono); letter-spacing: -4px; }

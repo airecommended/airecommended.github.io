@@ -28,6 +28,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Pin the daily build date
+        run: |
+          echo "BUILD_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+          echo "SITE_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+
       - name: Sync latest public data and generate static HTML
         run: npm run sync
 

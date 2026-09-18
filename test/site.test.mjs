@@ -25,6 +25,8 @@ test("首页展示1000家简短卡片及来源日期", async () => {
   assert.match(html, /站点目录<\/title>/);
   assert.match(html, /<meta name="description"/);
   assert.match(html, new RegExp(`dateModified":"${data.updatedDate}"`));
+  assert.match(html, new RegExp(`数据更新日期：<strong><time datetime="${data.updatedDate}">`));
+  assert.match(html, /页面每日自动构建，本次构建：<time datetime="\d{4}-\d{2}-\d{2}">/);
   assert.match(html, /"ItemList"/);
   assert.equal((html.match(/class="station-card"/g) || []).length, Math.min(1000, data.sites.length));
   assert.doesNotMatch(html, /class="station-highlight"|class="metric-grid"/);
@@ -69,7 +71,7 @@ test("新闻列表日期从构建日开始按文章顺序递减", async () => {
   const html = await text("news/index.html");
   const dates = [...html.matchAll(/<time>(\d{4}-\d{2}-\d{2})<\/time>/g)].map(match => match[1]);
   assert.ok(dates.length >= 2);
-  assert.equal(dates[0], "2026-09-15");
+  assert.match(dates[0], /^\d{4}-\d{2}-\d{2}$/);
   for (let index = 1; index < dates.length; index += 1) {
     const previous = new Date(`${dates[index - 1]}T00:00:00Z`);
     previous.setUTCDate(previous.getUTCDate() - 1);

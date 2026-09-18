@@ -19,6 +19,7 @@ const BAIDU_TONGJI_SCRIPT = [
   "</script>",
 ].join("\n");
 const NEWS_DATE = process.env.SITE_DATE || new Date().toISOString().slice(0, 10);
+const BUILD_DATE = process.env.BUILD_DATE || new Date().toISOString().slice(0, 10);
 const sync = process.argv.includes("--sync");
 
 const fixedPages = [
@@ -114,7 +115,7 @@ function channelGroupsContent() {
 
 function layout({ title, description, pathname, content, source = "", article = false }) {
   const canonical = `${ORIGIN}${pathname.endsWith("/") ? pathname : `${pathname}/`}`;
-  const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@type": article ? "Article" : "WebPage", headline: title, name: title, description, url: canonical, dateModified: new Date().toISOString().slice(0, 10) }).replaceAll("<", "\\u003c");
+  const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@type": article ? "Article" : "WebPage", headline: title, name: title, description, url: canonical, dateModified: BUILD_DATE }).replaceAll("<", "\\u003c");
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} | API 中转站推荐</title><meta name="description" content="${description.replaceAll('"', '&quot;')}"><link rel="canonical" href="${canonical}"><meta property="og:title" content="${title.replaceAll('"', '&quot;')}"><meta property="og:description" content="${description.replaceAll('"', '&quot;')}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${ORIGIN}/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">${jsonLd}</script>${BAIDU_TONGJI_SCRIPT}</head><body class="editorial-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/">站点目录</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main" class="editorial-shell">${content}</main><footer class="footer"><p>API 中转站推荐 · 持续整理站点、检测与行业资料</p><a href="#main">返回顶部 ↑</a></footer></body></html>\n`;
 }
 
@@ -163,7 +164,7 @@ for (let page = 1; page <= newsPages; page += 1) {
 const sitemapPath = path.join(ROOT, "sitemap.xml");
 let sitemap = await readFile(sitemapPath, "utf8");
 const editorialPaths = [...fixedPages.map(page => `${page.path}/`), "/news/", ...Array.from({ length: Math.max(0, newsPages - 1) }, (_, i) => `/news/page/${i + 2}/`), ...news.map(entry => `${entry.path}/`)];
-const lastmod = new Date().toISOString().slice(0, 10);
+const lastmod = BUILD_DATE;
 const additions = editorialPaths.filter(pathname => !sitemap.includes(`<loc>${ORIGIN}${pathname}</loc>`)).map(pathname => `  <url><loc>${ORIGIN}${pathname}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`).join("\n");
 sitemap = sitemap.replace("</urlset>", `${additions ? `${additions}\n` : ""}</urlset>`);
 await writeFile(sitemapPath, sitemap);

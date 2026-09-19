@@ -100,6 +100,15 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function decodeHtml(value) {
+  return String(value || "")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">")
+    .replaceAll("&quot;", '"')
+    .replaceAll("&#039;", "'");
+}
+
 function safeUrl(value) {
   try {
     const url = new URL(String(value || ""));
@@ -140,6 +149,7 @@ function normalizeSite(site, index) {
     historicalOnly: site.historicalOnly === true,
     sources: site.sources || [],
     detection: site.detection,
+    legacyFoot: String(site.legacyFoot || ""),
     rank: Math.max(1, Math.round(finite(site.rank) || index + 1)),
     name: String(site.name || "未命名站点").trim(),
     url: safeUrl(site.url),
@@ -174,6 +184,73 @@ async function atomicWrite(target, content) {
   const temporary = `${target}.tmp`;
   await writeFile(temporary, content, "utf8");
   await rename(temporary, target);
+}
+
+async function readLegacySites() {
+  const files = [path.join(ROOT, "index.html")];
+  try {
+    const entries = await readdir(PAGE_ROOT, { withFileTypes: true });
+    files.push(...entries
+      .filter(entry => entry.isDirectory() && /^\d+$/.test(entry.name))
+      .sort((a, b) => Number(a.name) - Number(b.name))
+      .map(entry => path.join(PAGE_ROOT, entry.name, "index.html")));
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+  const sites = [];
+  const cardPattern = /<article class="station-card" id="rank-(\d+)"[\s\S]*?<h2 id="station-\d+">\s*<a href="([^"]+)"[^>]*>([\s\S]*?)<span aria-hidden="true">↗\s*<\/span>\s*<\/a>\s*<\/h2>\s*<p class="compact-description">([\s\S]*?)<\/p>\s*<p class="compact-card-foot">([\s\S]*?)<\/p>\s*<\/article>/g;
+  for (const file of files) {
+    let html;
+    try { html = await readFile(file, "utf8"); } catch (error) {
+      if (error?.code === "ENOENT") continue;
+      throw error;
+    }
+    for (const match of html.matchAll(cardPattern)) {
+      const [, rank, url, name, description, footer] = match;
+      sites.push({
+        rank: Number(rank),
+        name: decodeHtml(name.replace(/\s+$/, "")),
+        url: decodeHtml(url),
+        description: decodeHtml(description),
+        legacyFoot: decodeHtml(footer),
+        models: [],
+        paymentMethods: [],
+        supportsRefund: null,
+        modelCount: 0,
+        uptime: null,
+        latencyMs: null,
+        userRating: null,
+        ratingCount: 0,
+      });
+    }
+  }
+  return sites.sort((a, b) => a.rank - b.rank);
+}
+
+function siteKey(site) {
+  try {
+    const url = new URL(site.url);
+    const slug = url.pathname.match(/^\/sites\/([^/]+)\/?$/)?.[1];
+    if (slug) return `slug:${slug.toLowerCase()}`;
+    return `host:${url.hostname.toLowerCase()}${url.pathname}`;
+  } catch {
+    return `name:${String(site.name || "").trim().toLowerCase()}`;
+  }
+}
+
+function mergeLegacySites(primarySites, legacySites) {
+  const primaryKeys = new Set(primarySites.map(siteKey));
+  const replacedPrimaryKeys = new Set();
+  const preserved = legacySites.filter(site => {
+    const key = siteKey(site);
+    const matchedPrimaryKey = primaryKeys.has(key) ? `key:${key}` : "";
+    if (matchedPrimaryKey && !replacedPrimaryKeys.has(matchedPrimaryKey)) {
+      replacedPrimaryKeys.add(matchedPrimaryKey);
+      return false;
+    }
+    return true;
+  });
+  return [...primarySites, ...preserved.map((site, index) => ({ ...site, rank: primarySites.length + index + 1 }))];
 }
 
 async function fetchAndSaveSnapshot() {
@@ -249,7 +326,7 @@ function renderSite(site) {
     : detection ? detection.text
     : site.models.length ? `收录 ${site.models.slice(0, 3).join('、')} 等模型，可前往站点了解接入方式。` : '公开站点目录收录，可前往站点查看服务介绍。';
   const detail = detection ? `${detection.text} 最近检测 ${DISPLAY_DATE}`
-    : site.supportsRefund ? '支持退款' : site.paymentMethods.slice(0, 2).join(' / ') || '公开站点资料';
+    : site.legacyFoot || (site.supportsRefund ? '支持退款' : site.paymentMethods.slice(0, 2).join(' / ') || '公开站点资料');
   return `<article class="station-card" id="rank-${site.rank}" aria-labelledby="station-${site.rank}"><div class="compact-card-top"><span class="catalog-number">${String(site.rank).padStart(4, '0')}</span><span class="catalog-kind">${detection ? '检测统计' : '公开站点'}</span></div><h2 id="station-${site.rank}"><a href="${escapeHtml(site.url)}" target="_blank" rel="nofollow noopener">${escapeHtml(site.name)} <span aria-hidden="true">↗</span></a></h2><p class="compact-description">${escapeHtml(descriptionSummary(summary, 84))}</p><p class="compact-card-foot">${escapeHtml(detail)}</p></article>`;
 }
 
@@ -378,9 +455,12 @@ async function build() {
     const primaryUpdatedDate = normalizeDate(primary.updatedDate)
       || normalizeDate(String(primary.generatedAt || "").slice(0, 10))
       || new Date().toISOString().slice(0, 10);
+    const legacySites = await readLegacySites();
+    const primarySites = primary.sites.map(normalizeSite);
     payload = {
       ...primary,
       updatedDate: primaryUpdatedDate,
+      sites: mergeLegacySites(primarySites, legacySites),
       sources: [{ name: "data.json", updatedAt: primary.generatedAt || primary.updatedDate, count: primary.sites.length }],
     };
   }

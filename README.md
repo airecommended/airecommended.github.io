@@ -15,7 +15,7 @@ python3 -m http.server 4173
 - `npm run sync`：只更新公开榜单，并使用已有数据库快照构建。
 - `npm run sync:data`：只同步 `data.json`，使用已有内容缓存构建页面，适合每日公开数据任务。
 - `npm run sync:db`：只更新数据库快照并构建。
-- `npm run build`：从现有 `data.json` 构建；如果存在 `database.json`，会额外合并本地检测数据。
+- `npm run build`：从现有 `data.json` 构建；如果存在 `database.json`，会额外合并本地检测数据；没有数据库快照时，会从已有分页保留旧站点，再用 `data.json` 覆盖对应站点。
 
 `npm run sync` 还会同步上述内容页面和新闻文章；内容缓存保存在 `scripts/editorial-cache.json`，普通 `npm run build` 使用缓存重新生成 HTML。
 

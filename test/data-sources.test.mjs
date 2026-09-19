@@ -33,7 +33,7 @@ test('快照不含账户、凭据、原始响应或访问者信息；完整目�
   }
   const merged = JSON.parse(await readFile(new URL('../combined-data.json', import.meta.url), 'utf8'));
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-  assert.ok(merged.sites.length > 500);
+  assert.ok(merged.sites.length >= 10000, `旧站点未保留，当前仅有 ${merged.sites.length} 家`);
   assert.match(html, /AI API 站点目录/);
   assert.ok(merged.sources.length >= 1);
 });

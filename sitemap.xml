@@ -2,272 +2,104 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://airecommended.github.io/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://airecommended.github.io/page/2/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/3/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/4/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/5/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/6/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/7/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/8/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/9/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/10/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/11/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/page/12/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/2/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/3/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/4/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/5/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/6/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/7/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/8/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/9/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gpt-zhongzhuanzhan/page/10/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://airecommended.github.io/claude-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/2/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/3/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/4/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/5/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/6/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/7/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/claude-zhongzhuanzhan/page/8/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://airecommended.github.io/codex-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://airecommended.github.io/gemini-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airecommended.github.io/gemini-zhongzhuanzhan/page/2/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://airecommended.github.io/glm-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://airecommended.github.io/qwen-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://airecommended.github.io/kimi-zhongzhuanzhan/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-  <url><loc>https://airecommended.github.io/guides/channel-groups/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/pitfalls/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/about/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/page/2/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/page/3/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/page/4/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/page/5/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/token-ai/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-api/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-ai/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-9/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-8/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-7/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-6/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-5/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-4/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-3/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-28/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-27/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-26/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-25/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-24/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-23/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-22/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-21/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-20/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-2/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-19/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-18/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-17/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-16/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-15/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-14/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-13/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-12/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-11/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api-10/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/api/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-token/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-dify-cursor/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-api-2/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-api/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-9/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-8/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-7/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-6/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-5/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-4/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-3/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-2/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-11/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai-10/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://airecommended.github.io/news/ai/</loc><lastmod>2026-09-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/guides/channel-groups/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/pitfalls/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/about/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/page/2/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/page/3/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/page/4/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/page/5/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/token-ai/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-api/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-ai/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-9/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-8/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-7/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-6/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-5/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-4/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-3/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-28/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-27/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-26/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-25/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-24/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-23/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-22/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-21/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-20/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-2/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-19/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-18/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-17/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-16/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-15/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-14/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-13/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-12/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-11/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api-10/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/api/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-token/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-dify-cursor/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-api-2/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-api/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-9/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-8/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-7/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-6/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-5/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-4/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-3/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-2/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-11/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai-10/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://airecommended.github.io/news/ai/</loc><lastmod>2026-09-19</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>

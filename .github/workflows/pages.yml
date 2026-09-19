@@ -3,12 +3,14 @@ name: Build and deploy GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - data.json
   schedule:
     - cron: "17 2 * * *"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -34,10 +36,22 @@ jobs:
           echo "SITE_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
 
       - name: Sync latest public data and generate static HTML
-        run: npm run sync
+        run: npm run sync:data
 
       - name: Verify generated site
         run: npm test
+
+      - name: Commit refreshed data snapshot
+        run: |
+          if git diff --quiet -- data.json; then
+            echo "data.json 没有变化"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "chore: update data snapshot [skip ci]"
+          git push origin HEAD:main
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

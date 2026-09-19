@@ -25,8 +25,8 @@ test("首页展示1000家简短卡片及来源日期", async () => {
   assert.match(html, /站点目录<\/title>/);
   assert.match(html, /<meta name="description"/);
   assert.match(html, new RegExp(`dateModified":"${data.updatedDate}"`));
-  assert.match(html, new RegExp(`数据更新日期：<strong><time datetime="${data.updatedDate}">`));
-  assert.match(html, /页面每日自动构建，本次构建：<time datetime="\d{4}-\d{2}-\d{2}">/);
+  assert.match(html, new RegExp(`更新时间：<strong><time datetime="${data.updatedDate}">`));
+  assert.doesNotMatch(html, /本次构建/);
   assert.match(html, /"ItemList"/);
   assert.equal((html.match(/class="station-card"/g) || []).length, Math.min(1000, data.sites.length));
   assert.doesNotMatch(html, /class="station-highlight"|class="metric-grid"/);

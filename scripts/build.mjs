@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_PATH = path.join(ROOT, "data.json");
+const DATABASE_PATH = path.join(ROOT, "database.json");
 const PAGE_ROOT = path.join(ROOT, "page");
 const STYLES_PATH = path.join(ROOT, "assets", "styles.css");
 const MINIFIED_STYLES_PATH = path.join(ROOT, "assets", "styles.min.css");
@@ -26,10 +27,6 @@ const BAIDU_TONGJI_SCRIPT = [
   "</script>",
 ].join("\n");
 const DISPLAY_DATE = process.env.SITE_DATE || new Date().toISOString().slice(0, 10);
-// `updatedDate` describes the source snapshot.  The sitemap, however, should
-// describe when this static site was actually rebuilt (the scheduled workflow
-// runs once per day even when the upstream snapshot has not changed).
-const BUILD_DATE = process.env.BUILD_DATE || new Date().toISOString().slice(0, 10);
 const PAGE_SIZE = 1000;
 let sourceSummary = "";
 const SHOULD_SYNC = process.argv.includes("--sync");
@@ -194,6 +191,9 @@ async function fetchAndSaveSnapshot() {
     if (current.updatedDate && capped.updatedDate && capped.updatedDate < current.updatedDate) {
       throw new Error(`拒绝使用旧快照：${capped.updatedDate} < ${current.updatedDate}`);
     }
+    if (current.generatedAt && capped.generatedAt && Date.parse(capped.generatedAt) <= Date.parse(current.generatedAt)) {
+      throw new Error(`上游快照没有更新：${capped.generatedAt} <= ${current.generatedAt}`);
+    }
   } catch (error) {
     if (error?.code !== "ENOENT") throw error;
   }
@@ -209,10 +209,7 @@ async function syncData() {
       if (attempt < 3) await new Promise(resolve => setTimeout(resolve, attempt * 1200));
     }
   }
-  const current = JSON.parse(await readFile(DATA_PATH, "utf8"));
-  validatePayload(current);
-  console.warn(`同步失败，保留已验证快照（${current.updatedDate}）：${failure.message}`);
-  if (process.env.GITHUB_ACTIONS) console.warn(`::warning::公开数据同步失败，当前使用 ${current.updatedDate} 快照`);
+  throw new Error(`每日数据同步失败：${failure?.message || "未知错误"}`);
 }
 
 function formatDate(value) {
@@ -304,8 +301,8 @@ function renderPage({ page, totalPages, sites, allSites, updatedDate, topic = nu
   const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: canonical, dateModified: updatedDate,
     mainEntity: { '@type': 'ItemList', numberOfItems: sites.length, itemListElement: sites.map(site => ({ '@type': 'ListItem', position: site.rank, name: site.name, url: site.url })) } }).replaceAll('<', '\\u003c');
   const hero = topic
-    ? `<div><p class="eyebrow">API RELAY DIRECTORY / 2026</p><h1>${escapeHtml(topic.label)}<span>模型相关站点目录</span></h1><p>AI API 站点目录汇集公开榜单与逐次检测记录，用成功率和样本数量比较站点表现。</p><p class="update-note">数据更新日期：<strong><time datetime="${updatedDate}">${formatDate(updatedDate)}</time></strong> · 页面每日自动构建，本次构建：<time datetime="${BUILD_DATE}">${formatDate(BUILD_DATE)}</time></p></div><aside><strong>${number.format(allSites.length)}</strong><span>个独立站点 · ${totalPages} 页</span></aside>`
-    : `<div><p class="eyebrow">API RELAY DIRECTORY / 2026</p><h1>全宇宙最全API中转站导航<span><strong>${number.format(allSites.length)}</strong> 个中转站已收录</span></h1><p class="directory-hero__tagline">最全收录 <i aria-hidden="true">·</i> 最专业</p><p>AI API 站点目录汇集公开榜单与逐次检测记录，用成功率和样本数量比较站点表现。</p><p class="update-note">数据更新日期：<strong><time datetime="${updatedDate}">${formatDate(updatedDate)}</time></strong> · 页面每日自动构建，本次构建：<time datetime="${BUILD_DATE}">${formatDate(BUILD_DATE)}</time></p></div><aside><strong>${number.format(allSites.length)}</strong><span>实时目录 · ${totalPages} 页</span></aside>`;
+    ? `<div><p class="eyebrow">API RELAY DIRECTORY / 2026</p><h1>${escapeHtml(topic.label)}<span>模型相关站点目录</span></h1><p>AI API 站点目录汇集公开榜单与逐次检测记录，用成功率和样本数量比较站点表现。</p><p class="update-note">更新时间：<strong><time datetime="${updatedDate}">${formatDate(updatedDate)}</time></strong></p></div><aside><strong>${number.format(allSites.length)}</strong><span>个独立站点 · ${totalPages} 页</span></aside>`
+    : `<div><p class="eyebrow">API RELAY DIRECTORY / 2026</p><h1>全宇宙最全API中转站导航<span><strong>${number.format(allSites.length)}</strong> 个中转站已收录</span></h1><p class="directory-hero__tagline">最全收录 <i aria-hidden="true">·</i> 最专业</p><p>AI API 站点目录汇集公开榜单与逐次检测记录，用成功率和样本数量比较站点表现。</p><p class="update-note">更新时间：<strong><time datetime="${updatedDate}">${formatDate(updatedDate)}</time></strong></p></div><aside><strong>${number.format(allSites.length)}</strong><span>实时目录 · ${totalPages} 页</span></aside>`;
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}"><link rel="canonical" href="${canonical}"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${ORIGIN}/assets/og-image.png"><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/styles.min.css"><script type="application/ld+json">${schema}</script>${BAIDU_TONGJI_SCRIPT}</head><body class="directory-page"><a class="skip-link" href="#main">跳到主要内容</a><header class="topbar"><a class="wordmark" href="/"><span>API 中转站</span><strong>推荐</strong></a><nav aria-label="主要导航"><a href="/#ranking">站点目录</a><a href="/#topics">模型专题</a><a href="/guides/channel-groups/">渠道科普</a><a href="/pitfalls/">选站避坑</a><a href="/news/">AI 新闻</a><a href="/about/">关于本站</a></nav></header><main id="main">${topic ? `<nav class="breadcrumbs" aria-label="面包屑"><a href="/">站点目录</a><span>${escapeHtml(topic.label)} · 第 ${page} 页</span></nav>` : renderBreadcrumbs(page, relativeRoot(page))}<section class="directory-hero${topic ? '' : ' directory-hero--home'}">${hero}</section><nav class="directory-topics" id="topics" aria-label="模型专题"><a href="/" ${!topic ? 'aria-current="page"' : ''}>全部站点</a>${TOPICS.map(t => `<a href="/${t.slug}/" ${topic?.slug === t.slug ? 'aria-current="page"' : ''}>${escapeHtml(t.short)}</a>`).join('')}</nav><section id="ranking" class="directory-ranking"><div class="ranking-head"><h2>全部站点 <span>/ 第 ${page} 页</span></h2><p>${sites[0]?.rank || 0}–${sites.at(-1)?.rank || 0} · 每页 1000 家</p></div>${renderPagination(page, totalPages, pathForPage)}<div class="station-list">${sites.map(renderSite).join('')}</div>${renderPagination(page, totalPages, pathForPage)}</section><section id="guide" class="directory-note"><h2>用数据比较站点表现</h2><p>结合成功率和检测次数选择站点，再按所需模型、价格与支付方式筛选。</p></section><section id="faq" class="directory-note"><h2>检测结果</h2><p>页面展示已完成检测的成功次数、总次数和成功率，便于直接比较不同站点的检测表现。</p></section></main><footer class="footer"><p>API 中转站推荐 · 站点目录</p><a href="#main">返回顶部 ↑</a></footer></body></html>`;
 }
 
@@ -370,8 +367,23 @@ async function cleanOldPages(totalPages) {
 async function build() {
   if (SHOULD_SYNC) await syncData();
   const primary = JSON.parse(await readFile(DATA_PATH, "utf8"));
-  const database = JSON.parse(await readFile(path.join(ROOT, "database.json"), "utf8"));
-  const payload = mergeSources(primary, database);
+  let payload;
+  try {
+    const database = JSON.parse(await readFile(DATABASE_PATH, "utf8"));
+    payload = mergeSources(primary, database);
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+    // The public snapshot is the required daily source. A local verification
+    // database is optional, so Pages can still rebuild when it is unavailable.
+    const primaryUpdatedDate = normalizeDate(primary.updatedDate)
+      || normalizeDate(String(primary.generatedAt || "").slice(0, 10))
+      || new Date().toISOString().slice(0, 10);
+    payload = {
+      ...primary,
+      updatedDate: primaryUpdatedDate,
+      sources: [{ name: "data.json", updatedAt: primary.generatedAt || primary.updatedDate, count: primary.sites.length }],
+    };
+  }
   sourceSummary = "";
   await atomicWrite(path.join(ROOT, "combined-data.json"), JSON.stringify(payload, null, 2) + "\n");
   validatePayload(payload);
@@ -398,7 +410,7 @@ async function build() {
   for (const { path: pageUrl, html } of topicPages) {
     await atomicWrite(path.join(ROOT, pageUrl.slice(1), "index.html"), minifyHtml(html));
   }
-  await atomicWrite(path.join(ROOT, "sitemap.xml"), renderSitemap(totalPages, BUILD_DATE, topicPages.map(p => p.path)));
+  await atomicWrite(path.join(ROOT, "sitemap.xml"), renderSitemap(totalPages, updatedDate, topicPages.map(p => p.path)));
   process.stdout.write(`已生成 ${totalPages} 页站点目录、${TOPICS.length} 个模型专题（${topicPages.length} 页）；数据池 ${sites.length} 家，数据日期 ${updatedDate}\n`);
 }
 
